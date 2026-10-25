@@ -5,7 +5,7 @@ export default function Contato() {
   return (
     <main>
       <section className="page-hero">
-        <div className="wrap page-title">
+        <div className="wrap page-title" data-motion="up">
           <div className="section-index">Contato</div>
           <h1>Cotar como fornecedor oficial da obra.</h1>
           <p>
@@ -15,8 +15,10 @@ export default function Contato() {
       </section>
       <section className="section tight">
         <div className="wrap lead-split">
-          <LeadForm />
-          <div>
+          <div data-motion="left">
+            <LeadForm />
+          </div>
+          <div data-motion="right">
             <p>
               Envie lote, UF e a lista de materiais. Respondemos com
               disponibilidade e prazo para a Fase 6.

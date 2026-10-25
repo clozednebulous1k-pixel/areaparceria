@@ -91,6 +91,9 @@ export default function Layout() {
       </header>
       <Outlet />
       <footer className="footer">
+        <span className="footer-mark" aria-hidden="true">
+          AREA
+        </span>
         <div className="wrap footer-grid">
           <div>
             <img src="/logo.png" alt="AREA" />

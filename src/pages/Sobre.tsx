@@ -4,7 +4,7 @@ export default function Sobre() {
   return (
     <main>
       <section className="page-hero">
-        <div className="wrap page-title">
+        <div className="wrap page-title" data-motion="up">
           <div className="section-index">A AREA</div>
           <h1>Parceiro técnico de quem executa o projeto.</h1>
           <p>
@@ -15,7 +15,7 @@ export default function Sobre() {
       </section>
       <section className="section tight">
         <div className="wrap grid-2">
-          <div>
+          <div data-motion="left">
             <p>
               A AREA nasceu com Alexandre e Anderson para servir obra de verdade:
               lista completa, norma técnica e prazo. Hoje operamos lojas e centros
@@ -31,7 +31,7 @@ export default function Sobre() {
               Solicitar cotação
             </Link>
           </div>
-          <div className="split-img">
+          <div className="split-img" data-motion="right">
             <img src="/img/warehouse.jpg" alt="Operação AREA" />
           </div>
         </div>

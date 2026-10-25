@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
 import ScrollToTop from './components/ScrollToTop'
+import PageMotion from './components/PageMotion'
 import Home from './pages/Home'
 import Sobre from './pages/Sobre'
 import Solucoes from './pages/Solucoes'
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <>
     <ScrollToTop />
+    <PageMotion />
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />

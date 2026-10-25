@@ -5,7 +5,7 @@ export default function Noticias() {
   return (
     <main>
       <section className="page-hero">
-        <div className="wrap page-title">
+        <div className="wrap page-title" data-motion="up">
           <div className="section-index">Notícias</div>
           <h1>Atualizações do projeto e da obra.</h1>
           <p>Novidades, guias e boas práticas do universo elétrico.</p>
@@ -14,7 +14,7 @@ export default function Noticias() {
       <section className="section">
         <div className="wrap grid-3">
           {news.map((n) => (
-            <Link key={n.slug} to={`/noticias/${n.slug}`} className="card">
+            <Link key={n.slug} to={`/noticias/${n.slug}`} className="card" data-motion="zoom">
               <img src={n.image} alt="" />
               <div className="card-body">
                 <div className="tag">

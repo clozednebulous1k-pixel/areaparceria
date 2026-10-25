@@ -1,19 +1,22 @@
+import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import LeadForm from '../components/LeadForm'
 import { diffs, projectItems } from '../data'
+
+const motions = ['up', 'left', 'right', 'zoom'] as const
 
 export default function Home() {
   return (
     <main>
       <section className="hero-tri">
-        <article className="hero-panel">
+        <article className="hero-panel" data-motion="left">
           <img src="/img/hero.jpg" alt="Obra e instalação" />
         </article>
         <article className="hero-mid">
-          <div className="hero-mid-photo">
+          <div className="hero-mid-photo" data-motion="down">
             <img src="/img/warehouse.jpg" alt="Estoque AREA" />
           </div>
-          <div className="hero-center">
+          <div className="hero-center" data-motion="up">
             <span className="kicker">Conectividade de escolas · Fase 6</span>
             <h1>FORNECEDOR OFICIAL</h1>
             <p>Materiais para o seu projeto — rede, energia e infraestrutura.</p>
@@ -27,40 +30,42 @@ export default function Home() {
             </div>
           </div>
         </article>
-        <article className="hero-panel">
+        <article className="hero-panel" data-motion="right">
           <img src="/img/cables.jpg" alt="Infraestrutura de rede" />
         </article>
       </section>
 
       <section className="stats compact" id="projeto">
         <div className="wrap stats-grid">
-          <div className="stat">
-            <strong>30 mil+</strong>
-            <span>escolas já conectadas no programa</span>
-          </div>
-          <div className="stat">
-            <strong>Dez/26</strong>
-            <span>início da demanda da Fase 6</span>
-          </div>
-          <div className="stat">
-            <strong>1.479</strong>
-            <span>escolas só no Lote 9 · São Paulo</span>
-          </div>
-          <div className="stat">
-            <strong>6 lojas</strong>
-            <span>e entrega nacional para o canteiro</span>
-          </div>
+          {[
+            ['30 mil+', 'escolas já conectadas no programa'],
+            ['Dez/26', 'início da demanda da Fase 6'],
+            ['1.479', 'escolas só no Lote 9 · São Paulo'],
+            ['6 lojas', 'e entrega nacional para o canteiro'],
+          ].map(([n, t], i) => (
+            <div key={n} className="stat" data-motion="up" style={{ '--d': `${i * 0.12}s` } as CSSProperties}>
+              <strong>{n}</strong>
+              <span>{t}</span>
+            </div>
+          ))}
         </div>
       </section>
 
       <section className="section tight">
         <div className="wrap">
           <div className="phase-line" aria-label="Fases do atendimento">
-            <div className="phase-track" aria-hidden="true">
-              <span className="phase-flow" />
+            <div className="phase-rail" aria-hidden="true">
+              <div className="phase-track">
+                <span className="phase-flow" />
+              </div>
             </div>
-            {diffs.map((d) => (
-              <article key={d.n} className="phase">
+            {diffs.map((d, i) => (
+              <article
+                key={d.n}
+                className="phase"
+                data-motion={motions[i % motions.length]}
+                style={{ '--d': `${i * 0.12}s` } as CSSProperties}
+              >
                 <span className="phase-dot">
                   <span className="phase-pulse" />
                 </span>
@@ -75,7 +80,7 @@ export default function Home() {
 
       <section className="section alt tight">
         <div className="wrap">
-          <div className="section-head">
+          <div className="section-head" data-motion="up">
             <div>
               <div className="section-index">Linha do projeto</div>
               <h2>O que a obra vai pedir.</h2>
@@ -85,8 +90,13 @@ export default function Home() {
             </Link>
           </div>
           <div className="sku-grid">
-            {projectItems.map((item) => (
-              <article key={item.code} className="sku">
+            {projectItems.map((item, i) => (
+              <article
+                key={item.code}
+                className="sku"
+                data-motion={i % 2 === 0 ? 'zoom' : 'up'}
+                style={{ '--d': `${(i % 4) * 0.08}s` } as CSSProperties}
+              >
                 <img src={item.image} alt={item.name} />
                 <span>{item.code}</span>
                 <strong>{item.name}</strong>
@@ -98,7 +108,7 @@ export default function Home() {
 
       <section className="section tight" id="cotacao">
         <div className="wrap lead-split">
-          <div>
+          <div data-motion="left">
             <div className="section-index">Cotação</div>
             <h2>Seja atendido como obra do projeto.</h2>
             <p>
@@ -106,7 +116,9 @@ export default function Home() {
               de fornecimento para você operar como fornecedor oficial no campo.
             </p>
           </div>
-          <LeadForm />
+          <div data-motion="right">
+            <LeadForm />
+          </div>
         </div>
       </section>
     </main>
