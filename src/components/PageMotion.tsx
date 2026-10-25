@@ -5,22 +5,34 @@ export default function PageMotion() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    // Pequeno delay para garantir montagem do DOM
-    const timer = setTimeout(() => {
-      const nodes = document.querySelectorAll<HTMLElement>('[data-motion]')
+    // Ao montar ou mudar de rota, remove is-in para reiniciar a animação
+    const nodes = document.querySelectorAll<HTMLElement>('[data-motion]')
+    nodes.forEach((node) => node.classList.remove('is-in'))
+
+    // Inicia a observação no próximo frame com transição visível
+    const rafId = requestAnimationFrame(() => {
       const io = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            entry.target.classList.toggle('is-in', entry.isIntersecting)
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-in')
+            } else {
+              entry.target.classList.remove('is-in')
+            }
           }
         },
-        { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
+        {
+          threshold: [0, 0.15],
+          rootMargin: '-5% 0px -5% 0px',
+        },
       )
-      nodes.forEach((node) => io.observe(node))
-      return () => io.disconnect()
-    }, 40)
 
-    return () => clearTimeout(timer)
+      nodes.forEach((node) => io.observe(node))
+
+      return () => io.disconnect()
+    })
+
+    return () => cancelAnimationFrame(rafId)
   }, [pathname])
 
   return null

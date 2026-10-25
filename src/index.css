@@ -1414,28 +1414,3 @@ select {
   transform: scale(1.05);
   filter: brightness(1);
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .intro-logo,
-  .intro-menu,
-  .intro-bar,
-  .hero h1,
-  .phase-track-fill,
-  .phase-node-ring,
-  .phase-node-core {
-    animation: none;
-  }
-  [data-motion] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .hero-panel.is-in img,
-  .hero-mid-photo.is-in img,
-  .card.is-in img,
-  .sku.is-in img,
-  .split-img.is-in img {
-    transform: none;
-    filter: none;
-  }
-}
