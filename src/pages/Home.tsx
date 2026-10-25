@@ -9,12 +9,16 @@ export default function Home() {
   return (
     <main>
       <section className="hero-tri">
-        <article className="hero-panel" data-motion="down">
-          <img src="/img/hero.jpg" alt="Obra e instalação" />
+        <article className="hero-panel">
+          <div className="hero-motion-down" data-motion="down">
+            <img src="/img/hero.jpg" alt="Obra e instalação" />
+          </div>
         </article>
         <article className="hero-mid">
-          <div className="hero-mid-photo" data-motion="down">
-            <img src="/img/warehouse.jpg" alt="Estoque AREA" />
+          <div className="hero-mid-photo">
+            <div className="hero-motion-down" data-motion="down">
+              <img src="/img/warehouse.jpg" alt="Estoque AREA" />
+            </div>
           </div>
           <div className="hero-center" data-motion="up">
             <span className="kicker">Conectividade de escolas · Fase 6</span>
@@ -30,8 +34,10 @@ export default function Home() {
             </div>
           </div>
         </article>
-        <article className="hero-panel" data-motion="down">
-          <img src="/img/cables.jpg" alt="Infraestrutura de rede" />
+        <article className="hero-panel">
+          <div className="hero-motion-down" data-motion="down">
+            <img src="/img/cables.jpg" alt="Infraestrutura de rede" />
+          </div>
         </article>
       </section>
 
