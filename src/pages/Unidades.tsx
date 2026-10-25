@@ -13,7 +13,7 @@ export default function Unidades() {
   return (
     <main>
       <section className="page-hero">
-        <div className="wrap page-title" data-motion="up">
+        <div className="wrap page-title">
           <div className="section-index">Unidades</div>
           <h1>Lojas e mapa da região.</h1>
           <p>Clique na unidade para abrir o mapa ao lado.</p>
@@ -27,7 +27,6 @@ export default function Unidades() {
                 key={s.city}
                 type="button"
                 className={`card store store-btn ${active === s.city ? 'is-active' : ''}`}
-                data-motion="left"
                 onClick={() => setActive(s.city)}
               >
                 <div className="uf">
@@ -41,7 +40,7 @@ export default function Unidades() {
               </button>
             ))}
           </div>
-          <aside className="map-panel" data-motion="right">
+          <aside className="map-panel">
             <div className="map-caption">
               <strong>{store.city}</strong>
               <span>{store.label} — {store.uf}</span>
