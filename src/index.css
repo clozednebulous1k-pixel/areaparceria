@@ -633,10 +633,10 @@ select {
 
 .phase-track-bar {
   position: absolute;
-  top: 11px; /* 24px de altura do nó / 2 = 12px centro, linha com 3px -> top: 10.5px */
-  left: calc(12.5% + 12px);
-  right: calc(12.5% + 12px);
-  height: 3px;
+  top: 11px;
+  left: calc(12.5% + 11px);
+  right: calc(12.5% + 11px);
+  height: 4px;
   background: #dce5f0;
   border-radius: 99px;
   overflow: hidden;
@@ -646,34 +646,29 @@ select {
 .phase-track-fill {
   display: block;
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
   border-radius: 99px;
   background: linear-gradient(
     90deg,
-    rgba(10, 42, 92, 0.15) 0%,
+    rgba(10, 42, 92, 0) 0%,
     var(--navy) 40%,
-    #4582e8 65%,
-    #9ec2ff 85%,
-    #ffffff 95%
+    #2563eb 70%,
+    #60a5fa 90%,
+    #ffffff 100%
   );
-  box-shadow: 0 0 10px rgba(69, 130, 232, 0.8);
-  animation: stepProgress 5.6s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.9);
+  animation: stepProgress 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 @keyframes stepProgress {
   0% {
     transform: translateX(-100%);
-    opacity: 0.4;
-  }
-  15% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
   }
   100% {
-    transform: translateX(110%);
-    opacity: 0.2;
+    transform: translateX(300%);
   }
 }
 
@@ -1362,29 +1357,31 @@ select {
   opacity: 0;
   will-change: opacity, transform;
   transition:
-    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.85s cubic-bezier(0.2, 0.9, 0.3, 1),
+    transform 0.95s cubic-bezier(0.2, 0.9, 0.3, 1);
   transition-delay: var(--d, 0s);
 }
 
-[data-motion='up'] {
-  transform: translateY(32px);
+/* Fotos descendo de cima para baixo */
+[data-motion='down'] {
+  transform: translateY(-65px);
 }
 
-[data-motion='down'] {
-  transform: translateY(-32px);
+/* Textos e blocos azuis subindo de baixo para cima */
+[data-motion='up'] {
+  transform: translateY(65px);
 }
 
 [data-motion='left'] {
-  transform: translateX(-40px);
+  transform: translateX(-65px);
 }
 
 [data-motion='right'] {
-  transform: translateX(40px);
+  transform: translateX(65px);
 }
 
 [data-motion='zoom'] {
-  transform: scale(0.92);
+  transform: scale(0.85);
 }
 
 [data-motion].is-in {
@@ -1400,21 +1397,21 @@ select {
 .sku img {
   will-change: transform, filter;
   transition:
-    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.9s ease;
-  filter: brightness(0.96);
+    transform 1s cubic-bezier(0.2, 0.9, 0.3, 1),
+    filter 1s ease;
+  filter: brightness(0.92);
 }
 
 .hero-panel.is-in img,
 .hero-mid-photo.is-in img {
-  transform: scale(1.04);
+  transform: scale(1.05);
   filter: brightness(1);
 }
 
 .card.is-in img,
 .sku.is-in img,
 .split-img.is-in img {
-  transform: scale(1.03);
+  transform: scale(1.05);
   filter: brightness(1);
 }
 

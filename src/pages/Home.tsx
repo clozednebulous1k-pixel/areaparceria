@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main>
       <section className="hero-tri">
-        <article className="hero-panel" data-motion="left">
+        <article className="hero-panel" data-motion="down">
           <img src="/img/hero.jpg" alt="Obra e instalação" />
         </article>
         <article className="hero-mid">
@@ -30,7 +30,7 @@ export default function Home() {
             </div>
           </div>
         </article>
-        <article className="hero-panel" data-motion="right">
+        <article className="hero-panel" data-motion="down">
           <img src="/img/cables.jpg" alt="Infraestrutura de rede" />
         </article>
       </section>
