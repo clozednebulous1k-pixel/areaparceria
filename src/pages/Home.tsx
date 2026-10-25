@@ -53,27 +53,29 @@ export default function Home() {
 
       <section className="section tight">
         <div className="wrap">
-          <div className="phase-line" aria-label="Fases do atendimento">
-            <div className="phase-rail" aria-hidden="true">
-              <div className="phase-track">
-                <span className="phase-flow" />
-              </div>
+          <div className="phase-stepper" aria-label="Fases do atendimento">
+            <div className="phase-track-bar" aria-hidden="true">
+              <span className="phase-track-fill" />
             </div>
-            {diffs.map((d, i) => (
-              <article
-                key={d.n}
-                className="phase"
-                data-motion={motions[i % motions.length]}
-                style={{ '--d': `${i * 0.12}s` } as CSSProperties}
-              >
-                <span className="phase-dot">
-                  <span className="phase-pulse" />
-                </span>
-                <div className="n">{d.n}</div>
-                <h3>{d.title}</h3>
-                <p>{d.text}</p>
-              </article>
-            ))}
+            <div className="phase-steps">
+              {diffs.map((d, i) => (
+                <article
+                  key={d.n}
+                  className="phase-step"
+                  data-motion={motions[i % motions.length]}
+                  style={{ '--d': `${i * 0.12}s`, '--i': i } as CSSProperties}
+                >
+                  <div className="phase-node">
+                    <span className="phase-node-ring">
+                      <span className="phase-node-core" />
+                    </span>
+                  </div>
+                  <div className="n">{d.n}</div>
+                  <h3>{d.title}</h3>
+                  <p>{d.text}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>

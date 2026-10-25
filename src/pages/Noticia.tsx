@@ -17,7 +17,7 @@ export default function Noticia() {
   return (
     <main>
       <section className="page-hero">
-        <div className="wrap page-title article">
+        <div className="wrap page-title article" data-motion="up">
           <div className="section-index">
             {item.category} · {item.date}
           </div>
@@ -27,11 +27,13 @@ export default function Noticia() {
       </section>
       <section className="section">
         <div className="wrap article">
-          <img
-            src={item.image}
-            alt=""
-            style={{ width: '100%', borderRadius: 24, height: 380, objectFit: 'cover', marginBottom: 32 }}
-          />
+          <div data-motion="zoom">
+            <img
+              src={item.image}
+              alt=""
+              style={{ width: '100%', borderRadius: 24, height: 380, objectFit: 'cover', marginBottom: 32 }}
+            />
+          </div>
           <p>
             Na AREA, acreditamos que especificação correta reduz retrabalho,
             aumenta a vida útil da instalação e protege quem usa o ambiente no
