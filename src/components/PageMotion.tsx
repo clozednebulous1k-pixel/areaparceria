@@ -5,34 +5,35 @@ export default function PageMotion() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    // Ao montar ou mudar de rota, remove is-in para reiniciar a animação
     const nodes = document.querySelectorAll<HTMLElement>('[data-motion]')
-    nodes.forEach((node) => node.classList.remove('is-in'))
 
-    // Inicia a observação no próximo frame com transição visível
-    const rafId = requestAnimationFrame(() => {
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-in')
-            } else {
-              entry.target.classList.remove('is-in')
-            }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in')
+          } else {
+            // Só remove se estiver realmente fora da viewport ao rolar
+            entry.target.classList.remove('is-in')
           }
-        },
-        {
-          threshold: [0, 0.15],
-          rootMargin: '-5% 0px -5% 0px',
-        },
-      )
+        }
+      },
+      {
+        threshold: 0.05,
+        rootMargin: '10px 0px 10px 0px',
+      },
+    )
 
-      nodes.forEach((node) => io.observe(node))
-
-      return () => io.disconnect()
+    nodes.forEach((node) => {
+      // Se já está no viewport, mantém ou ativa
+      const rect = node.getBoundingClientRect()
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        node.classList.add('is-in')
+      }
+      io.observe(node)
     })
 
-    return () => cancelAnimationFrame(rafId)
+    return () => io.disconnect()
   }, [pathname])
 
   return null
