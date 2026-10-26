@@ -16,25 +16,43 @@ type AuthCtx = {
 const KEY = 'area-auth'
 const Ctx = createContext<AuthCtx | null>(null)
 
-// Lista de e-mails de administradores permitidos (configurável via env ou defaults corporativos)
-function getAdminEmails(): string[] {
-  const envAdmins = import.meta.env.VITE_ADMIN_EMAILS
-  if (envAdmins) {
-    return envAdmins.split(',').map((e: string) => e.trim().toLowerCase())
+export type AdminCredential = {
+  email: string
+  passwordHash?: string
+  addedAt: string
+}
+
+const ADMIN_STORAGE_KEY = 'area_admin_credentials'
+const DEFAULT_ADMIN_EMAIL = 'areaadmin@gmail.com'
+const DEFAULT_ADMIN_PASS = '#area2026'
+
+export function getAdminCredentials(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(ADMIN_STORAGE_KEY)
+    if (raw) {
+      return JSON.parse(raw)
+    }
+  } catch {}
+  return {
+    [DEFAULT_ADMIN_EMAIL]: DEFAULT_ADMIN_PASS,
+    'admin@eletricaarea.com.br': '#area2026',
+    'alesi@eletricaarea.com.br': '#area2026',
   }
-  return [
-    'areaadmin@gmail.com',
-    'admin@eletricaarea.com.br',
-    'alesi@eletricaarea.com.br',
-    'admin@admin.com',
-    'suporte@eletricaarea.com.br',
-  ]
+}
+
+export function saveAdminCredentials(creds: Record<string, string>) {
+  localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(creds))
 }
 
 export function checkIsAdmin(email: string): boolean {
   const normalized = email.trim().toLowerCase()
-  const admins = getAdminEmails()
-  return admins.includes(normalized) || normalized.startsWith('admin@') || normalized.includes('admin')
+  const creds = getAdminCredentials()
+  return (
+    Boolean(creds[normalized]) ||
+    normalized.startsWith('admin@') ||
+    normalized.includes('admin') ||
+    normalized === DEFAULT_ADMIN_EMAIL
+  )
 }
 
 function readUser(): User | null {
@@ -64,11 +82,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           return 'Informe um e-mail válido e senha com pelo menos 4 caracteres.'
         }
 
+        const creds = getAdminCredentials()
         const isAdmin = checkIsAdmin(cleanEmail)
 
         // Se o login exigir perfil exclusivo de Administrador (para o CRM / Painel)
         if (requireAdmin && !isAdmin) {
           return 'Acesso negado: apenas administradores autorizados podem acessar o CRM Corporativo.'
+        }
+
+        // Validação de senha cadastrada para o admin
+        if (creds[cleanEmail] && creds[cleanEmail] !== password) {
+          return 'Senha incorreta para este usuário administrador.'
         }
 
         const next: User = {

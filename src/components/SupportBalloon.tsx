@@ -8,7 +8,10 @@ import {
 export default function SupportBalloon() {
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState('')
+  const [cnpj, setCnpj] = useState('')
   const [phone, setPhone] = useState('')
+  const [destination, setDestination] = useState('')
+  const [materialType, setMaterialType] = useState('')
   const [subject, setSubject] = useState('Dúvida sobre produtos')
   const [message, setMessage] = useState('')
   const [directMessage, setDirectMessage] = useState(
@@ -31,21 +34,27 @@ export default function SupportBalloon() {
     e.preventDefault()
     if (!name.trim() || !phone.trim()) return
 
-    // Salvar o Lead no banco do Dashboard
+    // Salvar o Lead no banco do Dashboard com CNPJ, Destino e Material
     saveLead({
       name: name.trim(),
       phone: phone.trim(),
+      cnpj: cnpj.trim() || undefined,
+      destination: destination.trim() || undefined,
+      materialType: materialType.trim() || undefined,
       subject,
-      message: message.trim() || 'Solicitação de atendimento iniciada pelo balão de suporte.',
+      message: message.trim() || `Material: ${materialType || 'Não especificado'} | Destino: ${destination || 'Não informado'}`,
       source: 'widget',
     })
 
     setSubmitted(true)
 
-    // Redireciona o cliente para o WhatsApp Corporativo com mensagem pronta
+    // Redireciona o cliente para o WhatsApp Corporativo com mensagem pronta completa
     const readyMessage = `*Olá, Equipe AREA! Solicitação de Atendimento*\n\n` +
       `👤 *Nome:* ${name.trim()}\n` +
+      (cnpj.trim() ? `🏢 *CNPJ:* ${cnpj.trim()}\n` : '') +
       `📱 *Telefone:* ${phone.trim()}\n` +
+      (destination.trim() ? `📍 *Destino:* ${destination.trim()}\n` : '') +
+      (materialType.trim() ? `⚡ *Material:* ${materialType.trim()}\n` : '') +
       `📌 *Assunto:* ${subject}\n` +
       (message.trim() ? `💬 *Mensagem:* ${message.trim()}\n\n` : '\n') +
       `Gostaria de falar com um especialista.`
@@ -166,7 +175,7 @@ export default function SupportBalloon() {
                   </p>
 
                   <label className="wa-label">
-                    <span>Seu Nome *</span>
+                    <span>Nome / Razão Social *</span>
                     <input
                       type="text"
                       className="wa-input"
@@ -177,17 +186,54 @@ export default function SupportBalloon() {
                     />
                   </label>
 
-                  <label className="wa-label">
-                    <span>Telefone / WhatsApp *</span>
-                    <input
-                      type="tel"
-                      className="wa-input"
-                      placeholder="Ex: (15) 99876-5432"
-                      required
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                  </label>
+                  <div className="wa-form-grid-2">
+                    <label className="wa-label">
+                      <span>CNPJ</span>
+                      <input
+                        type="text"
+                        className="wa-input"
+                        placeholder="00.000.000/0001-00"
+                        value={cnpj}
+                        onChange={(e) => setCnpj(e.target.value)}
+                      />
+                    </label>
+
+                    <label className="wa-label">
+                      <span>Telefone / WhatsApp *</span>
+                      <input
+                        type="tel"
+                        className="wa-input"
+                        placeholder="(15) 99876-5432"
+                        required
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="wa-form-grid-2">
+                    <label className="wa-label">
+                      <span>Destino (Cidade / Obra / UF)</span>
+                      <input
+                        type="text"
+                        className="wa-input"
+                        placeholder="Ex: Sorocaba / SP - Obra Centro"
+                        value={destination}
+                        onChange={(e) => setDestination(e.target.value)}
+                      />
+                    </label>
+
+                    <label className="wa-label">
+                      <span>Material Solicitado</span>
+                      <input
+                        type="text"
+                        className="wa-input"
+                        placeholder="Ex: Cabos, Painéis, LED, Disjuntores"
+                        value={materialType}
+                        onChange={(e) => setMaterialType(e.target.value)}
+                      />
+                    </label>
+                  </div>
 
                   <label className="wa-label">
                     <span>Assunto</span>
@@ -209,7 +255,7 @@ export default function SupportBalloon() {
                     <textarea
                       className="wa-textarea"
                       rows={2}
-                      placeholder="Ex: Preciso de cotação de cabos e eletrodutos para lote em SP..."
+                      placeholder="Ex: Preciso de cotação de 500m de cabo flexível 2,5mm..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                     />

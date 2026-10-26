@@ -15,6 +15,9 @@ export interface SupportLead {
   name: string
   phone: string
   email?: string
+  cnpj?: string
+  destination?: string // Cidade / Estado / Obra de destino
+  materialType?: string // Tipo de material solicitado
   subject: string
   message: string
   source: 'widget' | 'contact_form' | 'direct'

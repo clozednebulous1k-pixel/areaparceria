@@ -4,6 +4,7 @@ import { useAuth } from '../auth'
 import {
   fetchLeads,
   getStoredLeads,
+  saveLead,
   updateLeadStatus,
   deleteLead,
   getWhatsAppConfig,
@@ -21,6 +22,10 @@ import {
   checkEvolutionConnection,
   logoutEvolutionInstance,
 } from '../services/evolutionService'
+import {
+  getAdminCredentials,
+  saveAdminCredentials,
+} from '../auth'
 
 const orders = [
   { id: 'AR-10482', date: '22/10/2026', client: 'Obra Campolim', status: 'Em separação', tone: 'separacao', total: 'R$ 4.890,00' },
@@ -32,7 +37,7 @@ const orders = [
 export default function Dashboard() {
   const { user, logout, isAdmin } = useAuth()
 
-  const [activeTab, setActiveTab] = useState<'leads' | 'whatsapp' | 'orders'>('leads')
+  const [activeTab, setActiveTab] = useState<'leads' | 'whatsapp' | 'orders' | 'admins'>('leads')
   const [leads, setLeads] = useState<SupportLead[]>(() => getStoredLeads())
   const [filterStatus, setFilterStatus] = useState<string>('todos')
   const [searchTerm, setSearchTerm] = useState('')
@@ -40,6 +45,23 @@ export default function Dashboard() {
   const [chatLead, setChatLead] = useState<SupportLead | null>(null)
   const [evolutionQrCode, setEvolutionQrCode] = useState<string | null>(null)
   const [isCallingAuto, setIsCallingAuto] = useState<string | null>(null)
+
+  // Modal para Adicionar Cliente Manualmente
+  const [isAddClientOpen, setIsAddClientOpen] = useState(false)
+  const [newClientName, setNewClientName] = useState('')
+  const [newClientCnpj, setNewClientCnpj] = useState('')
+  const [newClientPhone, setNewClientPhone] = useState('')
+  const [newClientDest, setNewClientDest] = useState('')
+  const [newClientMat, setNewClientMat] = useState('')
+  const [newClientMsg, setNewClientMsg] = useState('')
+
+  // Gestão de Administradores & Senhas
+  const [adminList, setAdminList] = useState<Record<string, string>>(() => getAdminCredentials())
+  const [newAdminEmail, setNewAdminEmail] = useState('')
+  const [newAdminPass, setNewAdminPass] = useState('')
+  const [editAdminEmail, setEditAdminEmail] = useState('')
+  const [editAdminNewPass, setEditAdminNewPass] = useState('')
+  const [adminNotice, setAdminNotice] = useState<string | null>(null)
   
   // WhatsApp QR Code real state
   const [qrStep, setQrStep] = useState<'disconnected' | 'pairing' | 'connected'>(
@@ -191,6 +213,86 @@ export default function Dashboard() {
     }
   }
 
+  // 1. Cadastrar Novo Cliente Manualmente
+  async function handleAddManualClient(e: React.FormEvent) {
+    e.preventDefault()
+    if (!newClientName.trim() || !newClientPhone.trim()) {
+      alert('Informe ao menos o Nome e Telefone do cliente.')
+      return
+    }
+
+    const created = await saveLead({
+      name: newClientName.trim(),
+      phone: newClientPhone.trim(),
+      cnpj: newClientCnpj.trim() || undefined,
+      destination: newClientDest.trim() || undefined,
+      materialType: newClientMat.trim() || undefined,
+      subject: newClientMat ? `Material: ${newClientMat.trim()}` : 'Cliente Cadastrado Manualmente',
+      message: newClientMsg.trim() || `Material: ${newClientMat || '-'} | Destino: ${newClientDest || '-'}`,
+      source: 'direct',
+    })
+
+    setLeads([created, ...leads])
+    setIsAddClientOpen(false)
+    setNewClientName('')
+    setNewClientCnpj('')
+    setNewClientPhone('')
+    setNewClientDest('')
+    setNewClientMat('')
+    setNewClientMsg('')
+    alert('✅ Cliente adicionado com sucesso!')
+  }
+
+  // 2. Adicionar Novo Administrador
+  function handleAddAdmin(e: React.FormEvent) {
+    e.preventDefault()
+    const email = newAdminEmail.trim().toLowerCase()
+    if (!email.includes('@') || newAdminPass.length < 4) {
+      alert('Informe um e-mail válido e senha com pelo menos 4 dígitos.')
+      return
+    }
+
+    const updated = { ...adminList, [email]: newAdminPass }
+    saveAdminCredentials(updated)
+    setAdminList(updated)
+    setNewAdminEmail('')
+    setNewAdminPass('')
+    setAdminNotice(`✅ Novo administrador ${email} adicionado com sucesso!`)
+    setTimeout(() => setAdminNotice(null), 4000)
+  }
+
+  // 3. Alterar Senha de Administrador Existente
+  function handleChangePassword(e: React.FormEvent) {
+    e.preventDefault()
+    if (!editAdminEmail || editAdminNewPass.length < 4) {
+      alert('Selecione um administrador e defina a nova senha (mínimo 4 caracteres).')
+      return
+    }
+
+    const updated = { ...adminList, [editAdminEmail]: editAdminNewPass }
+    saveAdminCredentials(updated)
+    setAdminList(updated)
+    setEditAdminNewPass('')
+    setAdminNotice(`🔑 Senha do administrador ${editAdminEmail} alterada com sucesso!`)
+    setTimeout(() => setAdminNotice(null), 4000)
+  }
+
+  // 4. Remover Administrador
+  function handleRemoveAdmin(emailToRemove: string) {
+    if (emailToRemove === 'areaadmin@gmail.com') {
+      alert('O administrador principal da AREA não pode ser removido.')
+      return
+    }
+    if (window.confirm(`Deseja remover o acesso de administrador de ${emailToRemove}?`)) {
+      const updated = { ...adminList }
+      delete updated[emailToRemove]
+      saveAdminCredentials(updated)
+      setAdminList(updated)
+      setAdminNotice(`🗑️ Administrador ${emailToRemove} removido.`)
+      setTimeout(() => setAdminNotice(null), 4000)
+    }
+  }
+
   const filteredLeads = leads.filter((item) => {
     const matchesStatus = filterStatus === 'todos' || item.status === filterStatus
     const term = searchTerm.toLowerCase()
@@ -259,6 +361,14 @@ export default function Dashboard() {
             <span className="dash-tab-icon">📦</span>
             Pedidos & Faturamento
           </button>
+          <button
+            type="button"
+            className={`dash-tab-item ${activeTab === 'admins' ? 'active' : ''}`}
+            onClick={() => setActiveTab('admins')}
+          >
+            <span className="dash-tab-icon">🛡️</span>
+            Admins & Senhas
+          </button>
         </div>
 
         {/* ABA 1: LEADS & ATENDIMENTOS DO BALÃO */}
@@ -266,10 +376,17 @@ export default function Dashboard() {
           <div className="dash-tab-content">
             <div className="dash-leads-toolbar">
               <div className="dash-filters-group">
+                <button
+                  type="button"
+                  className="btn btn-navy btn-add-client"
+                  onClick={() => setIsAddClientOpen(true)}
+                >
+                  ➕ Adicionar Cliente
+                </button>
                 <input
                   type="text"
                   className="dash-search-input"
-                  placeholder="Buscar por cliente, telefone ou assunto..."
+                  placeholder="Buscar por cliente, CNPJ, destino ou material..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -309,11 +426,11 @@ export default function Dashboard() {
                 <table className="orders dash-leads-table">
                   <thead>
                     <tr>
-                      <th>Cliente</th>
+                      <th>Cliente & CNPJ</th>
                       <th>Telefone / Contato</th>
-                      <th>Assunto & Dúvida</th>
+                      <th>Destino (Obra / UF)</th>
+                      <th>Material Solicitado</th>
                       <th>Data / Hora</th>
-                      <th>Origem</th>
                       <th>Status</th>
                       <th>Ação Rápida</th>
                     </tr>
@@ -323,13 +440,22 @@ export default function Dashboard() {
                       <tr key={item.id} className={item.status === 'novo' ? 'row-highlight' : ''}>
                         <td>
                           <strong>{item.name}</strong>
-                          {item.email && <div className="dash-subtext">{item.email}</div>}
+                          {item.cnpj ? (
+                            <div className="dash-subtext">🏢 CNPJ: {item.cnpj}</div>
+                          ) : null}
+                          {item.email && <div className="dash-subtext">✉️ {item.email}</div>}
                         </td>
                         <td>
                           <div className="phone-tag">{item.phone}</div>
+                          <span className={`pill-source ${item.source}`} style={{ marginTop: '4px', display: 'inline-block' }}>
+                            {item.source === 'widget' ? 'Balão' : item.source === 'direct' ? 'Manual' : 'Site'}
+                          </span>
                         </td>
-                        <td style={{ maxWidth: '320px' }}>
-                          <span className="subject-pill">{item.subject}</span>
+                        <td>
+                          <strong>{item.destination || '—'}</strong>
+                        </td>
+                        <td style={{ maxWidth: '280px' }}>
+                          <span className="subject-pill">{item.materialType || item.subject}</span>
                           <p className="lead-msg-snippet" title={item.message}>
                             {item.message}
                           </p>
@@ -342,11 +468,6 @@ export default function Dashboard() {
                               hour: '2-digit',
                               minute: '2-digit',
                             })}
-                          </span>
-                        </td>
-                        <td>
-                          <span className={`pill-source ${item.source}`}>
-                            {item.source === 'widget' ? 'Balão Flutuante' : 'Formulário Site'}
                           </span>
                         </td>
                         <td>
@@ -614,7 +735,237 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+
+        {/* ABA 4: GESTÃO DE ADMINISTRADORES & SENHAS */}
+        {activeTab === 'admins' && (
+          <div className="dash-tab-content">
+            <div className="admin-mgmt-grid">
+              {/* Card 1: Lista de Admins Atuais */}
+              <div className="wa-settings-card">
+                <h3>Administradores Autorizados</h3>
+                <p>Contas com acesso total ao painel CRM, clientes, chat e configurações do WhatsApp.</p>
+                
+                {adminNotice && <div className="admin-notice-bar">{adminNotice}</div>}
+
+                <div className="admin-list-box">
+                  {Object.entries(adminList).map(([email, pass]) => (
+                    <div key={email} className="admin-user-item">
+                      <div className="admin-user-info">
+                        <span className="admin-badge-icon">🛡️</span>
+                        <div>
+                          <strong>{email}</strong>
+                          <div className="admin-pass-preview">Senha: •••••••• ({pass.length} dígitos)</div>
+                        </div>
+                      </div>
+                      <div className="admin-item-actions">
+                        <button
+                          type="button"
+                          className="btn-edit-admin-pass"
+                          onClick={() => {
+                            setEditAdminEmail(email)
+                            setEditAdminNewPass('')
+                          }}
+                        >
+                          Trocar Senha
+                        </button>
+                        {email !== 'areaadmin@gmail.com' && (
+                          <button
+                            type="button"
+                            className="btn-delete-admin"
+                            onClick={() => handleRemoveAdmin(email)}
+                            title="Remover Admin"
+                          >
+                            ✕
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 2: Ações de Novo Admin ou Alterar Senha */}
+              <div className="wa-settings-card">
+                {/* Form 1: Adicionar Novo Admin */}
+                <h3>➕ Adicionar Novo Administrador</h3>
+                <form onSubmit={handleAddAdmin} className="admin-form-sub">
+                  <div className="settings-field">
+                    <label>E-mail do Novo Admin *</label>
+                    <input
+                      type="email"
+                      className="wa-input"
+                      required
+                      placeholder="novo.admin@eletricaarea.com.br"
+                      value={newAdminEmail}
+                      onChange={(e) => setNewAdminEmail(e.target.value)}
+                    />
+                  </div>
+                  <div className="settings-field">
+                    <label>Definir Senha de Acesso *</label>
+                    <input
+                      type="password"
+                      className="wa-input"
+                      required
+                      minLength={4}
+                      placeholder="••••••••"
+                      value={newAdminPass}
+                      onChange={(e) => setNewAdminPass(e.target.value)}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-navy" style={{ width: '100%' }}>
+                    Cadastrar Novo Admin
+                  </button>
+                </form>
+
+                <hr style={{ margin: '24px 0', border: 'none', borderTop: '1px solid var(--line)' }} />
+
+                {/* Form 2: Trocar Senha */}
+                <h3>🔑 Alterar Senha de Admin</h3>
+                <form onSubmit={handleChangePassword} className="admin-form-sub">
+                  <div className="settings-field">
+                    <label>Selecione o Administrador</label>
+                    <select
+                      className="wa-select"
+                      value={editAdminEmail}
+                      onChange={(e) => setEditAdminEmail(e.target.value)}
+                    >
+                      <option value="">Selecione um admin...</option>
+                      {Object.keys(adminList).map((em) => (
+                        <option key={em} value={em}>
+                          {em}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="settings-field">
+                    <label>Nova Senha *</label>
+                    <input
+                      type="password"
+                      className="wa-input"
+                      required
+                      minLength={4}
+                      placeholder="Digite a nova senha segura..."
+                      value={editAdminNewPass}
+                      onChange={(e) => setEditAdminNewPass(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-navy"
+                    style={{ width: '100%' }}
+                    disabled={!editAdminEmail || editAdminNewPass.length < 4}
+                  >
+                    Salvar Nova Senha
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* MODAL PARA ADICIONAR CLIENTE MANUALMENTE */}
+      {isAddClientOpen && (
+        <div className="wa-chat-overlay" onClick={() => setIsAddClientOpen(false)}>
+          <div className="wa-add-client-window" onClick={(e) => e.stopPropagation()}>
+            <div className="wa-chat-header">
+              <h3>➕ Cadastrar Novo Cliente</h3>
+              <button
+                type="button"
+                className="wa-chat-close-btn"
+                onClick={() => setIsAddClientOpen(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <form onSubmit={handleAddManualClient} className="wa-add-client-form">
+              <label className="wa-label">
+                <span>Nome / Razão Social *</span>
+                <input
+                  type="text"
+                  className="wa-input"
+                  required
+                  placeholder="Nome do cliente ou empresa"
+                  value={newClientName}
+                  onChange={(e) => setNewClientName(e.target.value)}
+                />
+              </label>
+
+              <div className="wa-form-grid-2">
+                <label className="wa-label">
+                  <span>CNPJ</span>
+                  <input
+                    type="text"
+                    className="wa-input"
+                    placeholder="00.000.000/0001-00"
+                    value={newClientCnpj}
+                    onChange={(e) => setNewClientCnpj(e.target.value)}
+                  />
+                </label>
+                <label className="wa-label">
+                  <span>Telefone / WhatsApp *</span>
+                  <input
+                    type="tel"
+                    className="wa-input"
+                    required
+                    placeholder="(15) 99876-5432"
+                    value={newClientPhone}
+                    onChange={(e) => setNewClientPhone(e.target.value)}
+                  />
+                </label>
+              </div>
+
+              <div className="wa-form-grid-2">
+                <label className="wa-label">
+                  <span>Destino (Cidade / Obra / UF)</span>
+                  <input
+                    type="text"
+                    className="wa-input"
+                    placeholder="Ex: Sorocaba / SP"
+                    value={newClientDest}
+                    onChange={(e) => setNewClientDest(e.target.value)}
+                  />
+                </label>
+                <label className="wa-label">
+                  <span>Material Solicitado</span>
+                  <input
+                    type="text"
+                    className="wa-input"
+                    placeholder="Ex: Cabos elétricos, Disjuntores"
+                    value={newClientMat}
+                    onChange={(e) => setNewClientMat(e.target.value)}
+                  />
+                </label>
+              </div>
+
+              <label className="wa-label">
+                <span>Observações / Detalhes da Cotação</span>
+                <textarea
+                  className="wa-textarea"
+                  rows={2}
+                  placeholder="Itens solicitados, prazos ou condições..."
+                  value={newClientMsg}
+                  onChange={(e) => setNewClientMsg(e.target.value)}
+                />
+              </label>
+
+              <div className="wa-add-client-footer">
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => setIsAddClientOpen(false)}
+                >
+                  Cancelar
+                </button>
+                <button type="submit" className="btn btn-navy">
+                  Salvar Cliente
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* MODAL DE CHAT WHATSAPP INTEGRADO */}
       {chatLead && (
         <WhatsAppChatModal

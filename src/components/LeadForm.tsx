@@ -12,10 +12,13 @@ export default function LeadForm() {
     
     saveLead({
       name: (fd.get('nome') as string) || 'Cliente do Site',
+      cnpj: (fd.get('cnpj') as string) || undefined,
       phone: (fd.get('telefone') as string) || '',
       email: (fd.get('email') as string) || '',
-      subject: `Cotação Projeto / Lote: ${(fd.get('lote') as string) || 'Geral'}`,
-      message: `Empresa: ${(fd.get('empresa') as string) || '-'}\nMensagem: ${(fd.get('mensagem') as string) || ''}`,
+      destination: (fd.get('destino') as string) || undefined,
+      materialType: (fd.get('material') as string) || undefined,
+      subject: `Cotação de Materiais - ${(fd.get('material') as string) || 'Geral'}`,
+      message: `Empresa/CNPJ: ${(fd.get('cnpj') as string) || '-'}\nDestino: ${(fd.get('destino') as string) || '-'}\nMaterial: ${(fd.get('material') as string) || '-'}\nDetalhes: ${(fd.get('mensagem') as string) || ''}`,
       source: 'contact_form',
     })
 
@@ -25,33 +28,38 @@ export default function LeadForm() {
   return (
     <form className="form" onSubmit={onSubmit}>
       <label>
-        Nome
-        <input name="nome" required placeholder="Seu nome" />
-      </label>
-      <label>
-        Empresa
-        <input name="empresa" required placeholder="Razão social ou nome fantasia" />
+        Nome / Razão Social *
+        <input name="nome" required placeholder="Seu nome ou Razão Social" />
       </label>
       <div className="form-row">
         <label>
-          Telefone
-          <input name="telefone" required placeholder="(00) 00000-0000" />
+          CNPJ
+          <input name="cnpj" placeholder="00.000.000/0001-00" />
         </label>
         <label>
-          UF / lote
-          <input name="lote" placeholder="Ex.: SP — Lote 9" />
+          Telefone / WhatsApp *
+          <input name="telefone" required placeholder="(15) 99876-5432" />
+        </label>
+      </div>
+      <div className="form-row">
+        <label>
+          Destino (Cidade / Obra / UF) *
+          <input name="destino" required placeholder="Ex.: Sorocaba — Obra Comercial" />
+        </label>
+        <label>
+          Material Solicitado *
+          <input name="material" required placeholder="Ex.: Cabos, Eletrodutos, Iluminação LED" />
         </label>
       </div>
       <label>
-        E-mail
-        <input type="email" name="email" required placeholder="voce@empresa.com" />
+        E-mail para Orçamento
+        <input type="email" name="email" placeholder="voce@empresa.com" />
       </label>
       <label>
-        Como podemos atender
+        Observações ou Lista de Itens
         <textarea
           name="mensagem"
-          required
-          placeholder="Volume, prazo, lista de materiais ou trecho do projeto."
+          placeholder="Volume, prazo, marcas preferenciais ou detalhes específicos."
         />
       </label>
       {sent ? (
