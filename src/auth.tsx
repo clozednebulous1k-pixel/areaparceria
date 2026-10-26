@@ -23,6 +23,7 @@ function getAdminEmails(): string[] {
     return envAdmins.split(',').map((e: string) => e.trim().toLowerCase())
   }
   return [
+    'areaadmin@gmail.com',
     'admin@eletricaarea.com.br',
     'alesi@eletricaarea.com.br',
     'admin@admin.com',

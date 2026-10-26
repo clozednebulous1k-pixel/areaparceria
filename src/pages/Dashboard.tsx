@@ -14,6 +14,13 @@ import {
   type WhatsAppConfig,
 } from '../services/supportService'
 import { isFirebaseConfigured } from '../firebase'
+import WhatsAppChatModal from '../components/WhatsAppChatModal'
+import {
+  createOrConnectEvolutionInstance,
+  sendWhatsAppMessage,
+  checkEvolutionConnection,
+  logoutEvolutionInstance,
+} from '../services/evolutionService'
 
 const orders = [
   { id: 'AR-10482', date: '22/10/2026', client: 'Obra Campolim', status: 'Em separação', tone: 'separacao', total: 'R$ 4.890,00' },
@@ -30,12 +37,14 @@ export default function Dashboard() {
   const [filterStatus, setFilterStatus] = useState<string>('todos')
   const [searchTerm, setSearchTerm] = useState('')
   const [config, setConfig] = useState<WhatsAppConfig>(getWhatsAppConfig())
+  const [chatLead, setChatLead] = useState<SupportLead | null>(null)
+  const [evolutionQrCode, setEvolutionQrCode] = useState<string | null>(null)
+  const [isCallingAuto, setIsCallingAuto] = useState<string | null>(null)
   
-  // WhatsApp QR Code simulator state
+  // WhatsApp QR Code real state
   const [qrStep, setQrStep] = useState<'disconnected' | 'pairing' | 'connected'>(
     config.isConnected ? 'connected' : 'disconnected'
   )
-  const [pairingTimer, setPairingTimer] = useState<number>(30)
   const [phoneForQR, setPhoneForQR] = useState(config.corporateNumber || '551530327900')
   const [customMsgTemplate, setCustomMsgTemplate] = useState(config.defaultGreeting)
 
@@ -46,24 +55,6 @@ export default function Dashboard() {
     }
     load()
   }, [])
-
-  // Atualizar contagem regressiva se estiver pareando
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | undefined
-    if (qrStep === 'pairing') {
-      interval = setInterval(() => {
-        setPairingTimer((prev) => {
-          if (prev <= 1) {
-            return 30
-          }
-          return prev - 1
-        })
-      }, 1000)
-    }
-    return () => {
-      if (interval) clearInterval(interval)
-    }
-  }, [qrStep])
 
   // Apenas Administradores podem acessar o CRM Corporativo
   if (!user) return <Navigate to="/login" replace />
@@ -96,6 +87,23 @@ export default function Dashboard() {
     }
   }
 
+  // Chamar cliente AUTOMATICAMENTE via Evolution API na VPS
+  async function handleAutoCallCustomer(lead: SupportLead) {
+    setIsCallingAuto(lead.id)
+    const msg = `Olá ${lead.name}, tudo bem? Aqui é da equipe AREA Material Elétrico!\n\n` +
+      `Recebemos sua mensagem em nosso portal sobre: "${lead.subject}".\n` +
+      `Como posso te ajudar com o seu projeto elétrico hoje?`
+
+    await sendWhatsAppMessage(lead.phone, msg, lead.id, 'AREA Central')
+
+    if (lead.status === 'novo') {
+      handleStatusChange(lead.id, 'chamado')
+    }
+
+    setIsCallingAuto(null)
+    setChatLead(lead) // Abre a janela de chat com o histórico da conversa
+  }
+
   function handleCallWhatsApp(lead: SupportLead) {
     const msg = `Olá ${lead.name}, tudo bem? Aqui é da equipe AREA Material Elétrico!\n\n` +
       `Recebemos sua mensagem em nosso portal sobre: "${lead.subject}".\n` +
@@ -119,22 +127,59 @@ export default function Dashboard() {
     alert('Configurações do WhatsApp Corporativo salvas com sucesso!')
   }
 
-  function handleSimulateConnect() {
+  // Gerar QR Code Real e checar conexão
+  async function handleConnectWhatsApp() {
     setQrStep('pairing')
+    setEvolutionQrCode(null)
+
+    try {
+      const conn = await createOrConnectEvolutionInstance()
+      if (conn.status === 'open') {
+        setQrStep('connected')
+        const updated = await saveWhatsAppConfig({
+          isConnected: true,
+          connectedAt: new Date().toLocaleString('pt-BR'),
+        })
+        setConfig(updated)
+        return
+      }
+
+      if (conn.qrcode) {
+        setEvolutionQrCode(conn.qrcode)
+      }
+    } catch (err) {
+      console.error('Erro ao conectar WhatsApp:', err)
+    }
   }
 
-  async function handleConfirmPairing() {
-    const updated = await saveWhatsAppConfig({
-      isConnected: true,
-      connectedAt: new Date().toLocaleString('pt-BR'),
-      connectedNumber: phoneForQR,
-    })
-    setConfig(updated)
-    setQrStep('connected')
-  }
+  // Monitorar se o usuário leu o QR Code no celular a cada 3 segundos
+  useEffect(() => {
+    let timer: ReturnType<typeof setInterval> | undefined
+    if (qrStep === 'pairing') {
+      timer = setInterval(async () => {
+        const isConnected = await checkEvolutionConnection()
+        if (isConnected) {
+          setQrStep('connected')
+          setEvolutionQrCode(null)
+          const updated = await saveWhatsAppConfig({
+            isConnected: true,
+            connectedAt: new Date().toLocaleString('pt-BR'),
+            connectedNumber: phoneForQR,
+          })
+          setConfig(updated)
+          alert('🎉 WhatsApp conectado com sucesso via QR Code!')
+        }
+      }, 3000)
+    }
+    return () => {
+      if (timer) clearInterval(timer)
+    }
+  }, [qrStep, phoneForQR])
 
+  // Desconectar Sessão Real
   async function handleDisconnect() {
-    if (window.confirm('Deseja desconectar a sessão do WhatsApp Corporativo?')) {
+    if (window.confirm('Deseja realmente desconectar a sessão do WhatsApp na Evolution API?')) {
+      await logoutEvolutionInstance()
       const updated = await saveWhatsAppConfig({
         isConnected: false,
         connectedAt: undefined,
@@ -142,6 +187,7 @@ export default function Dashboard() {
       })
       setConfig(updated)
       setQrStep('disconnected')
+      setEvolutionQrCode(null)
     }
   }
 
@@ -321,15 +367,33 @@ export default function Dashboard() {
                           <div className="dash-action-buttons">
                             <button
                               type="button"
+                              className="btn-wa-auto"
+                              onClick={() => handleAutoCallCustomer(item)}
+                              disabled={isCallingAuto === item.id}
+                              title="Disparar mensagem no WhatsApp do cliente automaticamente e abrir chat"
+                            >
+                              <span className="wa-bolt-icon">⚡</span>
+                              {isCallingAuto === item.id ? 'Disparando...' : 'Chamar Automático'}
+                            </button>
+
+                            <button
+                              type="button"
+                              className="btn-open-chat"
+                              onClick={() => setChatLead(item)}
+                              title="Abrir Chat com histórico deste cliente"
+                            >
+                              💬 Chat
+                            </button>
+
+                            <button
+                              type="button"
                               className="btn-wa-call"
                               onClick={() => handleCallWhatsApp(item)}
-                              title="Abrir WhatsApp pronto para conversar com este cliente"
+                              title="Abrir no WhatsApp Web"
                             >
-                              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                                <path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.34 5L2 22l5.17-1.33C8.6 21.49 10.26 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm.05 17c-1.55 0-3.03-.43-4.32-1.2l-.31-.18-3.07.8.82-2.99-.2-.33A7.94 7.94 0 0 1 4.05 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-7.95 8z"/>
-                              </svg>
-                              Chamar no WhatsApp
+                              🔗 Link Web
                             </button>
+
                             <button
                               type="button"
                               className="btn-delete-lead"
@@ -379,9 +443,9 @@ export default function Dashboard() {
                     <button
                       type="button"
                       className="btn btn-navy wa-start-pair-btn"
-                      onClick={handleSimulateConnect}
+                      onClick={handleConnectWhatsApp}
                     >
-                      Gerar QR Code de Conexão
+                      Gerar QR Code Real de Conexão
                     </button>
                   </div>
                 )}
@@ -389,40 +453,43 @@ export default function Dashboard() {
                 {qrStep === 'pairing' && (
                   <div className="wa-qr-box active-pairing">
                     <div className="wa-qr-placeholder live">
-                      {/* Simulação animada de leitura do QR code */}
-                      <div className="qr-scan-line"></div>
-                      <svg viewBox="0 0 160 160" width="180" height="180" className="qr-svg-mock">
-                        <rect width="160" height="160" fill="#ffffff" rx="8" />
-                        <path d="M15 15h40v40h-40z M25 25h20v20h-20z M105 15h40v40h-40z M115 25h20v20h-20z M15 105h40v40h-40z M25 115h20v20h-20z M65 20h30v15h-30z M70 45h20v20h-20z M20 65h25v30h-25z M55 65h20v20h-20z M85 65h35v15h-35z M130 65h15v25h-15z M65 95h15v25h-15z M90 90h25v20h-25z M125 100h20v20h-20z M65 130h45v15h-45z M120 130h25v15h-25z" fill="#0a2a5c" />
-                        <circle cx="80" cy="80" r="18" fill="#25D366" />
-                        <path d="M76 73l3 3 5-5" stroke="#fff" strokeWidth="2" fill="none" />
-                      </svg>
+                      {evolutionQrCode ? (
+                        <img
+                          src={evolutionQrCode.startsWith('data:') ? evolutionQrCode : `data:image/png;base64,${evolutionQrCode}`}
+                          alt="QR Code WhatsApp Evolution"
+                          style={{ width: '200px', height: '200px', objectFit: 'contain' }}
+                        />
+                      ) : (
+                        <div style={{ padding: '30px', textAlign: 'center' }}>
+                          <div className="qr-scan-line"></div>
+                          <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--navy)' }}>
+                            Gerando QR Code na Evolution API...
+                          </p>
+                          <small style={{ color: 'var(--muted)' }}>Aguarde 3 segundos...</small>
+                        </div>
+                      )}
                     </div>
 
                     <div className="wa-countdown-box">
-                      Código expira em: <strong>{pairingTimer}s</strong>
+                      Aguardando leitura do WhatsApp no seu celular...
                     </div>
 
                     <div className="wa-instructions-list">
                       <ol>
                         <li>Abra o WhatsApp no seu smartphone</li>
                         <li>Toque em <strong>Aparelhos conectados</strong> &gt; <strong>Conectar um aparelho</strong></li>
-                        <li>Aponte a câmera para esta tela</li>
+                        <li>Aponte a câmera para o QR Code acima</li>
                       </ol>
                     </div>
 
                     <div className="wa-pairing-actions">
                       <button
                         type="button"
-                        className="btn btn-navy"
-                        onClick={handleConfirmPairing}
-                      >
-                        ✓ Simular Conexão Concluída
-                      </button>
-                      <button
-                        type="button"
                         className="btn btn-outline"
-                        onClick={() => setQrStep('disconnected')}
+                        onClick={() => {
+                          setQrStep('disconnected')
+                          setEvolutionQrCode(null)
+                        }}
                       >
                         Cancelar
                       </button>
@@ -548,6 +615,13 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+      {/* MODAL DE CHAT WHATSAPP INTEGRADO */}
+      {chatLead && (
+        <WhatsAppChatModal
+          lead={chatLead}
+          onClose={() => setChatLead(null)}
+        />
+      )}
     </main>
   )
 }
