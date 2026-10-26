@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/evolution/:path*",
+      "destination": "http://187.77.254.212:8085/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

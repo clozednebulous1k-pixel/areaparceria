@@ -24,9 +24,17 @@ export interface ChatMessage {
 const MESSAGES_COLLECTION = 'whatsapp_messages'
 const MESSAGES_LOCAL_KEY = 'area_whatsapp_messages'
 
-// Configurações da Evolution API
+// Configurações da Evolution API com suporte a Proxy HTTPS da Vercel
 export function getEvolutionConfig() {
-  const url = import.meta.env.VITE_EVOLUTION_API_URL || 'http://187.77.254.212:8085'
+  const envUrl = import.meta.env.VITE_EVOLUTION_API_URL
+  // Se estiver rodando em HTTPS (como na Vercel), usa o proxy /api/evolution para evitar Mixed Content Block
+  let url = '/api/evolution'
+  if (typeof window !== 'undefined' && window.location.protocol === 'http:') {
+    url = envUrl || 'http://187.77.254.212:8085'
+  } else if (envUrl && envUrl.startsWith('https://')) {
+    url = envUrl
+  }
+
   const apiKey = import.meta.env.VITE_EVOLUTION_API_KEY || 'AreaEletricaSecKey2026!'
   const instanceName = 'area_eletrica'
   return { url: url.replace(/\/$/, ''), apiKey, instanceName }
