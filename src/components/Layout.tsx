@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth'
 import { contact } from '../data'
+import SupportBalloon from './SupportBalloon'
 
 const links = [
   { to: '/', label: 'Projeto', hash: 'projeto' },
@@ -90,6 +91,7 @@ export default function Layout() {
         </div>
       </header>
       <Outlet />
+      <SupportBalloon />
       <footer className="footer">
         <span className="footer-mark" aria-hidden="true">
           AREA

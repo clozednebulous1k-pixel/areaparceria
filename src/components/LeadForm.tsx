@@ -1,11 +1,24 @@
 import { useState, type FormEvent } from 'react'
 import { contact } from '../data'
+import { saveLead } from '../services/supportService'
 
 export default function LeadForm() {
   const [sent, setSent] = useState(false)
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const form = e.currentTarget
+    const fd = new FormData(form)
+    
+    saveLead({
+      name: (fd.get('nome') as string) || 'Cliente do Site',
+      phone: (fd.get('telefone') as string) || '',
+      email: (fd.get('email') as string) || '',
+      subject: `Cotação Projeto / Lote: ${(fd.get('lote') as string) || 'Geral'}`,
+      message: `Empresa: ${(fd.get('empresa') as string) || '-'}\nMensagem: ${(fd.get('mensagem') as string) || ''}`,
+      source: 'contact_form',
+    })
+
     setSent(true)
   }
 

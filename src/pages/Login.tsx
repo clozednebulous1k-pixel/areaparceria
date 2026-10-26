@@ -12,7 +12,8 @@ export default function Login() {
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
-    const msg = login(String(data.get('email') || ''), String(data.get('password') || ''))
+    // Exige login exclusivo de Admin para acessar o Painel CRM / WhatsApp
+    const msg = login(String(data.get('email') || ''), String(data.get('password') || ''), true)
     if (msg) setError(msg)
     else navigate('/dashboard')
   }
@@ -20,14 +21,14 @@ export default function Login() {
   return (
     <main className="auth-page">
       <form className="form auth-card" onSubmit={onSubmit}>
-        <div className="section-index">Acesso</div>
-        <h1>Entrar na AREA</h1>
+        <div className="section-index">Área Administrativa</div>
+        <h1>CRM & Atendimento AREA</h1>
         <p className="auth-lead">
-          Acompanhe pedidos, orçamentos e o status das suas obras no painel.
+          Acesso restrito a administradores para gestão de leads, conexões do WhatsApp e suporte.
         </p>
         <label>
-          E-mail
-          <input type="email" name="email" required placeholder="voce@empresa.com" />
+          E-mail de Administrador
+          <input type="email" name="email" required placeholder="admin@eletricaarea.com.br" />
         </label>
         <label>
           Senha
@@ -35,12 +36,12 @@ export default function Login() {
         </label>
         {error ? <div className="form-error">{error}</div> : null}
         <button className="btn btn-navy" type="submit">
-          Entrar
+          Acessar CRM Admin
         </button>
         <p className="auth-hint">
-          Demo: qualquer e-mail válido e senha com 4+ caracteres.
+          🛡️ Apenas contas com e-mail corporativo de administrador possuem acesso liberado.
         </p>
-        <Link to="/contato">Prefere pedir orçamento sem cadastro?</Link>
+        <Link to="/contato">Dúvidas? Entre em contato com a equipe</Link>
       </form>
     </main>
   )

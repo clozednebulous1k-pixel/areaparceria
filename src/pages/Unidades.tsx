@@ -26,7 +26,7 @@ export default function Unidades() {
               <button
                 key={s.city}
                 type="button"
-                className={`card store store-btn ${active === s.city ? 'is-active' : ''}`}
+                className={`store-btn ${active === s.city ? 'is-active' : ''}`}
                 onClick={() => setActive(s.city)}
               >
                 <div className="uf">

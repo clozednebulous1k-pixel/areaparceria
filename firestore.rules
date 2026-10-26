@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Coleção de Leads e Atendimentos do Suporte
+    match /support_leads/{leadId} {
+      // Qualquer cliente pode criar uma solicitação pelo balão no site
+      allow create: if true;
+      
+      // Leitura, atualização e exclusão apenas para administradores logados
+      allow read, update, delete: if request.auth != null;
+    }
+    
+    // Coleção de Configurações do Sistema e WhatsApp Corporativo
+    match /system_settings/{document=**} {
+      // Leitura pública (para carregar o número do WhatsApp no balão)
+      allow read: if true;
+      
+      // Apenas administradores autenticados podem alterar configurações
+      allow write: if request.auth != null;
+    }
+  }
+}
