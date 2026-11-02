@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useRef, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import BranchesMap from '../components/BranchesMap'
 import FlowExplainer from '../components/FlowExplainer'
@@ -8,18 +8,46 @@ import { diffs, projectItems } from '../data'
 const motions = ['up', 'left', 'right', 'zoom'] as const
 
 export default function Home() {
+  const videoLeftRef = useRef<HTMLVideoElement>(null)
+  const videoMidRef = useRef<HTMLVideoElement>(null)
+  const videoRightRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    // Reduz a velocidade de reprodução dos vídeos para um efeito suave e cinematográfico (65%)
+    const playbackSpeed = 0.65
+    if (videoLeftRef.current) videoLeftRef.current.playbackRate = playbackSpeed
+    if (videoMidRef.current) videoMidRef.current.playbackRate = playbackSpeed
+    if (videoRightRef.current) videoRightRef.current.playbackRate = playbackSpeed
+  }, [])
+
   return (
     <main>
       <section className="hero-tri">
         <article className="hero-panel">
           <div className="hero-motion-down" data-motion="down">
-            <img src="/img/hero.jpg" alt="Obra e instalação" />
+            <video
+              ref={videoLeftRef}
+              src="/img/hero_left.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="hero-video-media"
+            />
           </div>
         </article>
         <article className="hero-mid">
           <div className="hero-mid-photo">
             <div className="hero-motion-down" data-motion="down">
-              <img src="/img/warehouse.jpg" alt="Estoque AREA" />
+              <video
+                ref={videoMidRef}
+                src="/img/hero_mid.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="hero-video-media"
+              />
             </div>
           </div>
           <div className="hero-center" data-motion="up">
@@ -38,7 +66,15 @@ export default function Home() {
         </article>
         <article className="hero-panel">
           <div className="hero-motion-down" data-motion="down">
-            <img src="/img/cables.jpg" alt="Infraestrutura de rede" />
+            <video
+              ref={videoRightRef}
+              src="/img/hero_right.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="hero-video-media"
+            />
           </div>
         </article>
       </section>

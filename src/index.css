@@ -303,7 +303,10 @@ select {
 }
 
 .hero-panel img,
-.hero-mid-photo img {
+.hero-panel video,
+.hero-video-media,
+.hero-mid-photo img,
+.hero-mid-photo video {
   position: absolute;
   inset: 0;
   width: 100%;
