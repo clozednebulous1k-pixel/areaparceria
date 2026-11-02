@@ -204,13 +204,6 @@ export default function BranchesMap() {
                 <p className="info-text">{activeBranch.address}</p>
               </div>
 
-              <div className="card-info-row">
-                <span className="info-icon">📞</span>
-                <p className="info-text">
-                  <strong>{activeBranch.phone}</strong>
-                </p>
-              </div>
-
               <div className="card-actions">
                 <a
                   className="btn btn-navy card-btn"
