@@ -13,8 +13,8 @@ export default function Home() {
   const videoRightRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
-    // Reduz a velocidade de reprodução dos vídeos para um efeito suave e cinematográfico (65%)
-    const playbackSpeed = 0.65
+    // 0.85 mantém a reprodução natural com fluidez de 60fps sem engasgos de frames
+    const playbackSpeed = 0.85
     if (videoLeftRef.current) videoLeftRef.current.playbackRate = playbackSpeed
     if (videoMidRef.current) videoMidRef.current.playbackRate = playbackSpeed
     if (videoRightRef.current) videoRightRef.current.playbackRate = playbackSpeed
