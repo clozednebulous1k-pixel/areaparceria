@@ -930,35 +930,208 @@ select {
 .sku-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 20px;
+}
+
+.catalog-preview-sub {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 6px 0 0;
 }
 
 .sku {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 10px;
-  background: #fff;
+  border: 1px solid #e1e8f2;
+  border-radius: 18px;
+  padding: 14px;
+  background: #ffffff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(10, 42, 92, 0.03);
 }
 
-.sku img {
+.sku:hover {
+  transform: translateY(-6px);
+  border-color: #93c5fd;
+  box-shadow: 0 16px 32px -8px rgba(10, 42, 92, 0.12);
+}
+
+.sku-thumb {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8fafc;
+  aspect-ratio: 16/10;
+  margin-bottom: 14px;
+}
+
+.sku-thumb img {
   width: 100%;
-  height: 120px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  transition: transform 0.4s ease;
 }
 
-.sku span {
-  display: block;
+.sku:hover .sku-thumb img {
+  transform: scale(1.06);
+}
+
+.sku-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(10, 42, 92, 0.85);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.02em;
+}
+
+.sku-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.sku-code {
+  display: inline-block;
   font-size: 11px;
-  letter-spacing: 0.04em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563eb;
+  margin-bottom: 4px;
+}
+
+.sku-title {
+  color: var(--navy);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 12px;
+  min-height: 40px;
+}
+
+.sku-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed #e5edf7;
+}
+
+.sku-spec {
+  font-size: 11px;
   color: var(--muted);
 }
 
-.sku strong {
-  color: var(--navy);
-  font-size: 14px;
+.sku-quote-link {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1d4ed8;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.sku:hover .sku-quote-link {
+  color: #0284c7;
+  transform: translateX(3px);
+}
+
+.catalog-cta-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.catalog-see-more-btn {
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px -6px rgba(10, 42, 92, 0.25);
+  transition: all 0.25s ease;
+}
+
+.catalog-see-more-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -6px rgba(37, 99, 235, 0.35);
+}
+
+@media (max-width: 768px) {
+  .sku-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .sku {
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .sku-thumb {
+    aspect-ratio: 16/11;
+    margin-bottom: 8px;
+    border-radius: 9px;
+  }
+
+  .sku-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    top: 6px;
+    left: 6px;
+  }
+
+  .sku-code {
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .sku-title {
+    font-size: 13px;
+    min-height: 34px;
+    margin-bottom: 8px;
+    line-height: 1.25;
+  }
+
+  .sku-action {
+    padding-top: 8px;
+  }
+
+  .sku-spec {
+    font-size: 10px;
+  }
+
+  .sku-quote-link {
+    font-size: 11px;
+  }
+
+  .catalog-see-more-btn {
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sku-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .sku {
+    padding: 8px;
+    border-radius: 12px;
+  }
+
+  .sku-title {
+    font-size: 12px;
+    min-height: 32px;
+  }
 }
 
 .form label {
@@ -1243,6 +1416,43 @@ select {
 .auth-hint {
   color: var(--muted);
   margin: 0 0 8px;
+}
+
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input-wrap input {
+  width: 100%;
+  padding-right: 44px !important;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  color: var(--muted, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.1s ease;
+  border-radius: 6px;
+}
+
+.toggle-password-btn:hover {
+  color: var(--navy, #0f172a);
+}
+
+.toggle-password-btn:active {
+  transform: translateY(-50%) scale(0.92);
 }
 
 .form-error {
@@ -2990,6 +3200,854 @@ select {
   gap: 14px;
   margin-top: 12px;
 }
+
+/* =========================================================
+   SEÇÃO DO MAPA OFICIAL DO BRASIL COM PONTOS CLICÁVEIS DAS FILIAIS
+   ========================================================= */
+.branches-section {
+  padding: 60px 0 30px;
+  background: #ffffff;
+  position: relative;
+}
+
+.branches-subtitle {
+  color: var(--muted);
+  max-width: 620px;
+  margin-top: 8px;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.branches-map-card {
+  position: relative;
+  background: radial-gradient(circle at 40% 45%, #ffffff 0%, #f6faff 100%);
+  border: 1.5px solid #d4e2f5;
+  border-radius: 24px;
+  padding: 36px 30px 28px;
+  margin-top: 36px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px -12px rgba(10, 42, 92, 0.08);
+}
+
+.map-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(to right, rgba(10, 42, 92, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 42, 92, 0.035) 1px, transparent 1px);
+}
+
+.map-interactive-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 32px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.map-svg-wrap {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.brazil-official-svg {
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+  display: block;
+  filter: drop-shadow(0 14px 28px rgba(10, 42, 92, 0.08));
+}
+
+/* Traçado dos 27 estados do Brasil - Branco com contorno azul */
+.brazil-state {
+  fill: #ffffff;
+  stroke: #16407a;
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: all 0.25s ease;
+}
+
+.brazil-state:hover {
+  fill: #f0f6ff;
+  stroke: #2563eb;
+  stroke-width: 1.5;
+}
+
+.brazil-state.has-branch {
+  fill: #f9fbff;
+  stroke: #0a2a5c;
+  stroke-width: 1.35;
+}
+
+/* Conexões interligando filiais */
+.connection-track {
+  stroke: #93c5fd;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+  fill: none;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.connection-track.active {
+  stroke: #2563eb;
+  stroke-width: 2.2;
+  stroke-dasharray: none;
+  opacity: 1;
+}
+
+.connection-flow {
+  stroke: url(#streamGrad);
+  stroke-width: 2.2;
+  stroke-dasharray: 8 90;
+  stroke-linecap: round;
+  fill: none;
+  animation: netFlow 3.5s linear infinite;
+  opacity: 0.85;
+}
+
+.connection-flow.active {
+  stroke: #0284c7;
+  stroke-width: 2.8;
+  filter: drop-shadow(0 0 5px #38bdf8);
+}
+
+@keyframes netFlow {
+  from { stroke-dashoffset: 200; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* Pontos interativos das filiais */
+.branch-point-group {
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.branch-point-group:hover,
+.branch-point-group.is-active {
+  transform-origin: center;
+}
+
+.pulse-aura {
+  fill: rgba(37, 99, 235, 0.22);
+  animation: auraPulse 2.2s ease-out infinite;
+  transform-origin: center;
+}
+
+.pulse-aura.delayed {
+  animation-delay: 1.1s;
+}
+
+@keyframes auraPulse {
+  0% { r: 4; opacity: 0.9; }
+  100% { r: 18; opacity: 0; }
+}
+
+.pin-base {
+  fill: #ffffff;
+  stroke: #0a2a5c;
+  stroke-width: 2.2;
+  filter: drop-shadow(0 2px 5px rgba(10, 42, 92, 0.25));
+  transition: all 0.2s ease;
+}
+
+.pin-base.pin-hub {
+  stroke: #0a2a5c;
+  stroke-width: 2.6;
+}
+
+.pin-center {
+  fill: #2563eb;
+  transition: all 0.2s ease;
+}
+
+.branch-point-group:hover .pin-base,
+.branch-point-group.is-active .pin-base {
+  stroke: #0284c7;
+  stroke-width: 2.8;
+  fill: #ffffff;
+}
+
+.branch-point-group:hover .pin-center,
+.branch-point-group.is-active .pin-center {
+  fill: #0284c7;
+  r: 4;
+}
+
+/* Tooltips de texto integrados no mapa */
+.pin-tooltip {
+  pointer-events: none;
+}
+
+.pin-title {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  fill: #0a2a5c;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+}
+
+.pin-subtitle {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 600;
+  fill: #4b6282;
+  paint-order: stroke fill;
+  stroke: #ffffff;
+  stroke-width: 2.5px;
+  stroke-linejoin: round;
+}
+
+/* Painel lateral de detalhes da filial clicada */
+.branch-detail-card {
+  background: #ffffff;
+  border: 1px solid #dbe6f5;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 30px -8px rgba(10, 42, 92, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-start;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.card-city {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+
+.card-label {
+  font-size: 0.95rem;
+  color: #3b82f6;
+  font-weight: 600;
+  margin: 0 0 18px;
+}
+
+.card-info-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.info-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.info-text {
+  margin: 0;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 16px;
+  border-top: 1px solid #eef2f7;
+}
+
+.card-btn {
+  width: 100%;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+}
+
+/* Legenda inferior / Pílulas clicáveis */
+.branches-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px dashed #dbe6f5;
+  position: relative;
+  z-index: 2;
+}
+
+.legend-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #dbe6f5;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(10, 42, 92, 0.04);
+}
+
+.legend-pill:hover,
+.legend-pill.is-active {
+  background: #eff6ff;
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px -3px rgba(37, 99, 235, 0.15);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.legend-info {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.legend-info strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.legend-info span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width: 960px) {
+  .map-interactive-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .branch-detail-card {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .branches-map-card {
+    padding: 24px 14px 20px;
+  }
+  .brazil-official-svg {
+    max-height: 380px;
+  }
+}
+
+/* =========================================================
+   SEÇÃO ANIMADA DE FLUXO COM CAMINHÃO E LETRAS 'A R E A'
+   (DESIGN REFINADO, ELEGANTE E PROPORCIONAL)
+   ========================================================= */
+.flow-explainer-section {
+  padding: 56px 0 48px;
+  background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-explainer-subtitle {
+  color: var(--muted);
+  max-width: 580px;
+  margin: 6px auto 0;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.center-text .section-index {
+  display: inline-block;
+}
+
+.flow-grid-container {
+  position: relative;
+  margin-top: 32px;
+}
+
+/* =========================================================
+   PISTA / RODOVIA LOCALIZADA DISCRETAMENTE ACIMA DOS CARDS
+   ========================================================= */
+.truck-highway-track {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  margin-bottom: 16px;
+}
+
+.highway-road-line {
+  position: absolute;
+  bottom: 8px;
+  left: 6%;
+  right: 6%;
+  height: 3px;
+  background: #e2edf8;
+  border-radius: 99px;
+}
+
+.highway-road-stripe {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #3b82f6 0px,
+    #3b82f6 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  border-radius: 99px;
+  opacity: 0.6;
+}
+
+/* Estações / Pontos discretos na rodovia */
+.highway-stations {
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  display: flex;
+  pointer-events: auto;
+}
+
+.highway-station-dot {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+.highway-stations .highway-station-dot:nth-child(1) { left: 12.5%; }
+.highway-stations .highway-station-dot:nth-child(2) { left: 37.5%; }
+.highway-stations .highway-station-dot:nth-child(3) { left: 62.5%; }
+.highway-stations .highway-station-dot:nth-child(4) { left: 87.5%; }
+
+.highway-station-dot.visited {
+  border-color: #2563eb;
+  background: #2563eb;
+}
+
+.highway-station-dot.current {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  transform: translateX(-50%) scale(1.15);
+}
+
+/* O Caminhãozinho compacto e elegante */
+.truck-vehicle-runner {
+  position: absolute;
+  bottom: 8px;
+  transform: translateX(-50%);
+  transition: left 0.85s cubic-bezier(0.34, 1.2, 0.64, 1);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.truck-sprite {
+  position: relative;
+  width: 76px;
+  height: 36px;
+  animation: truckDrive 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes truckDrive {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1px); }
+}
+
+.truck-precise-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.wheel-group {
+  transform-origin: center;
+}
+
+/* Fumacinha discreta */
+.truck-smoke {
+  position: absolute;
+  bottom: 6px;
+  left: -2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.4);
+  animation: puffSmoke 0.9s ease-out infinite;
+}
+
+.truck-smoke.s2 {
+  animation-delay: 0.45s;
+  bottom: 9px;
+}
+
+@keyframes puffSmoke {
+  0% { transform: scale(0.3) translate(0, 0); opacity: 0.7; }
+  100% { transform: scale(1.8) translate(-10px, -5px); opacity: 0; }
+}
+
+/* Wrapper dos cards - proporções refinadas */
+.flow-cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.flow-step-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #e2eaf5;
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px -4px rgba(10, 42, 92, 0.04);
+}
+
+.flow-step-card:hover {
+  transform: translateY(-3px);
+  border-color: #93c5fd;
+  box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.1);
+}
+
+.flow-step-card.is-truck-active {
+  transform: translateY(-4px);
+  border-color: #2563eb;
+  background: #fbfdff;
+  box-shadow: 0 12px 28px -6px rgba(37, 99, 235, 0.14);
+}
+
+.flow-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.flow-icon-bubble {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #f0f6ff;
+  border: 1px solid #dbeafe;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.flow-icon-bubble svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s ease;
+}
+
+.flow-step-card.is-truck-active .flow-icon-bubble,
+.flow-step-card:hover .flow-icon-bubble {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.35);
+}
+
+.flow-icon-ping {
+  position: absolute;
+  inset: -4px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(37, 99, 235, 0.35);
+  animation: pingIcon 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pingIcon {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+.flow-step-num {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 800;
+  color: #cbd5e1;
+  letter-spacing: -0.02em;
+  transition: color 0.25s ease;
+}
+
+.flow-step-card.is-truck-active .flow-step-num {
+  color: #2563eb;
+}
+
+.flow-meta-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.flow-card-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0284c7;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+
+.flow-card-content h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.flow-card-content p {
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* =========================================================
+   A PALAVRA 'A - R - E - A' (CONECTOR DISCRETO E ELEGANTE)
+   ========================================================= */
+.area-connect-strip {
+  position: relative;
+  margin-top: 24px;
+  padding-top: 24px;
+}
+
+.area-connect-wire {
+  position: absolute;
+  top: 18px;
+  left: 6%;
+  right: 6%;
+  height: 2px;
+  background: #e2eaf5;
+  border-radius: 99px;
+  z-index: 1;
+}
+
+.area-wire-current {
+  position: absolute;
+  top: -1.5px;
+  width: 52px;
+  height: 5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #0284c7, #2563eb, #38bdf8);
+  box-shadow: 0 0 8px #38bdf8;
+  transform: translateX(-50%);
+  transition: left 0.85s cubic-bezier(0.34, 1.2, 0.64, 1);
+  z-index: 2;
+}
+
+.area-letters-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.area-letter-box {
+  background: #ffffff;
+  border: 1px solid #dbe6f5;
+  border-radius: 12px;
+  padding: 14px 8px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(10, 42, 92, 0.03);
+}
+
+.area-letter-box:hover {
+  border-color: #93c5fd;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px -3px rgba(37, 99, 235, 0.08);
+}
+
+.area-letter-box.is-active {
+  background: #f8fbff;
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px -4px rgba(37, 99, 235, 0.15);
+}
+
+.area-letter-char {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #0a2a5c;
+  letter-spacing: -0.02em;
+  transition: all 0.25s ease;
+}
+
+.area-letter-box.is-active .area-letter-char {
+  color: #2563eb;
+  transform: scale(1.06);
+}
+
+.area-letter-word {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+  transition: color 0.25s ease;
+}
+
+.area-letter-box.is-active .area-letter-word {
+  color: #1d4ed8;
+}
+
+/* Bolinha indicadora exatamente sobre a linha conectora */
+.area-letter-indicator {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid #cbd5e1;
+  transition: all 0.25s ease;
+  z-index: 3;
+}
+
+.area-letter-box.is-active .area-letter-indicator {
+  border-color: #2563eb;
+  background: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  transform: translateX(-50%) scale(1.15);
+}
+
+@media (max-width: 1024px) {
+  .truck-highway-track {
+    display: none;
+  }
+  .flow-cards-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* No celular: letras A-R-E-A completas em uma única linha horizontal retas */
+@media (max-width: 768px) {
+  .flow-cards-wrapper {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .area-connect-strip {
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+
+  .area-connect-wire {
+    display: block;
+    top: 14px;
+    left: 4%;
+    right: 4%;
+  }
+
+  .area-letters-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px;
+  }
+
+  .area-letter-box {
+    padding: 10px 4px 8px;
+    border-radius: 10px;
+  }
+
+  .area-letter-char {
+    font-size: 1.35rem;
+  }
+
+  .area-letter-word {
+    font-size: 7.5px;
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .area-letter-indicator {
+    top: -5px;
+    width: 8px;
+    height: 8px;
+  }
+}
+
+
+
+
 
 
 

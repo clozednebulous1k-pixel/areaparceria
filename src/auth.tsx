@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
+import { sanitizeEmail, containsSqlInjection } from './utils/security'
 
 export type User = {
   name: string
@@ -77,8 +78,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       isAdmin: Boolean(user?.isAdmin),
       login: (email, password, requireAdmin = false) => {
-        const cleanEmail = email.trim().toLowerCase()
-        if (!cleanEmail.includes('@') || password.length < 4) {
+        if (containsSqlInjection(email) || containsSqlInjection(password)) {
+          return 'Tentativa inválida detectada por segurança (caracteres restritos).'
+        }
+
+        const cleanEmail = sanitizeEmail(email)
+        if (!cleanEmail || !cleanEmail.includes('@') || password.length < 4) {
           return 'Informe um e-mail válido e senha com pelo menos 4 caracteres.'
         }
 

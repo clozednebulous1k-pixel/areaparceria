@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth'
 import {
   fetchLeads,
@@ -36,6 +36,7 @@ const orders = [
 
 export default function Dashboard() {
   const { user, logout, isAdmin } = useAuth()
+  const navigate = useNavigate()
 
   const [activeTab, setActiveTab] = useState<'leads' | 'whatsapp' | 'orders' | 'admins'>('leads')
   const [leads, setLeads] = useState<SupportLead[]>(() => getStoredLeads())
@@ -89,8 +90,15 @@ export default function Dashboard() {
           <p style={{ color: 'var(--muted)', marginBottom: '24px' }}>
             A conta <strong>{user.email}</strong> não possui privilégios de administrador para gerenciar o WhatsApp e os Leads.
           </p>
-          <button className="btn btn-navy" type="button" onClick={logout}>
-            Sair e Entrar como Admin
+          <button
+            className="btn btn-navy"
+            type="button"
+            onClick={() => {
+              logout()
+              navigate('/')
+            }}
+          >
+            Sair e Voltar ao Início
           </button>
         </div>
       </main>
@@ -323,7 +331,14 @@ export default function Dashboard() {
             <span className={`db-status-badge ${isFirebaseConfigured ? 'firebase' : 'local'}`}>
               {isFirebaseConfigured ? '🔥 Firebase Firestore Ativo' : '💾 Banco Local (Pronto p/ Firebase)'}
             </span>
-            <button className="btn btn-outline" type="button" onClick={logout}>
+            <button
+              className="btn btn-outline"
+              type="button"
+              onClick={() => {
+                logout()
+                navigate('/')
+              }}
+            >
               Sair
             </button>
           </div>

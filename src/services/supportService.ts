@@ -9,6 +9,7 @@ import {
   orderBy,
 } from 'firebase/firestore'
 import { db, isFirebaseConfigured } from '../firebase'
+import { sanitizeLeadPayload, sanitizeText } from '../utils/security'
 
 export interface SupportLead {
   id: string
@@ -123,12 +124,13 @@ export function getStoredLeads(): SupportLead[] {
 export async function saveLead(
   lead: Omit<SupportLead, 'id' | 'createdAt' | 'status'> & Partial<SupportLead>,
 ): Promise<SupportLead> {
+  const sanitized = sanitizeLeadPayload(lead)
   const leads = getStoredLeads()
   const newLead: SupportLead = {
     id: `LEAD-${Date.now().toString().slice(-4)}`,
     createdAt: new Date().toISOString(),
     status: 'novo',
-    ...lead,
+    ...sanitized,
   }
 
   // Grava localmente de imediato
@@ -156,9 +158,10 @@ export async function updateLeadStatus(
   status: SupportLead['status'],
   notes?: string,
 ): Promise<SupportLead[]> {
+  const cleanNotes = notes !== undefined ? sanitizeText(notes) : undefined
   const leads = getStoredLeads()
   const updated = leads.map((l) =>
-    l.id === id ? { ...l, status, ...(notes !== undefined ? { notes } : {}) } : l,
+    l.id === id ? { ...l, status, ...(cleanNotes !== undefined ? { notes: cleanNotes } : {}) } : l,
   )
 
   try {
@@ -171,7 +174,7 @@ export async function updateLeadStatus(
     try {
       const ref = doc(db, FIRESTORE_LEADS_COLLECTION, id)
       const dataToUpdate: any = { status }
-      if (notes !== undefined) dataToUpdate.notes = notes
+      if (cleanNotes !== undefined) dataToUpdate.notes = cleanNotes
       await updateDoc(ref, dataToUpdate)
     } catch (err) {
       console.warn('Erro ao atualizar no Firestore:', err)

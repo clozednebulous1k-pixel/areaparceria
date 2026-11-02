@@ -1,5 +1,7 @@
 import type { CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
+import BranchesMap from '../components/BranchesMap'
+import FlowExplainer from '../components/FlowExplainer'
 import LeadForm from '../components/LeadForm'
 import { diffs, projectItems } from '../data'
 
@@ -86,30 +88,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Mapa com as filiais conectadas */}
+      <BranchesMap />
+
+      {/* Seção Animada de Conexão e Explicação do Processo do Site */}
+      <FlowExplainer />
+
       <section className="section alt tight">
         <div className="wrap">
           <div className="section-head" data-motion="up">
             <div>
               <div className="section-index">Linha do projeto</div>
               <h2>O que a obra vai pedir.</h2>
+              <p className="catalog-preview-sub">Principais itens homologados e com pronto atendimento para a sua lista técnica.</p>
             </div>
             <Link to="/solucoes" className="btn btn-outline">
-              Ver catálogo
+              Ver catálogo completo ({projectItems.length} itens) ↗
             </Link>
           </div>
           <div className="sku-grid">
-            {projectItems.map((item, i) => (
+            {projectItems.slice(0, 6).map((item, i) => (
               <article
                 key={item.code}
                 className="sku"
                 data-motion={i % 2 === 0 ? 'zoom' : 'up'}
-                style={{ '--d': `${(i % 4) * 0.08}s` } as CSSProperties}
+                style={{ '--d': `${(i % 3) * 0.08}s` } as CSSProperties}
               >
-                <img src={item.image} alt={item.name} />
-                <span>{item.code}</span>
-                <strong>{item.name}</strong>
+                <div className="sku-thumb">
+                  <img src={item.image} alt={item.name} />
+                  <span className="sku-badge">Pronta-entrega</span>
+                </div>
+                <div className="sku-content">
+                  <span className="sku-code">{item.code}</span>
+                  <strong className="sku-title">{item.name}</strong>
+                  <div className="sku-action">
+                    <span className="sku-spec">Especificação Fase 6</span>
+                    <a href="#cotacao" className="sku-quote-link">Cotar item →</a>
+                  </div>
+                </div>
               </article>
             ))}
+          </div>
+          <div className="catalog-cta-wrap" data-motion="up">
+            <Link to="/solucoes" className="btn btn-navy catalog-see-more-btn">
+              Explorar Catálogo Completo com Filtros
+            </Link>
           </div>
         </div>
       </section>
