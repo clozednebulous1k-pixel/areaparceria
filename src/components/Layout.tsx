@@ -117,7 +117,8 @@ export default function Layout() {
             <h4>Atendimento</h4>
             <p>{contact.hours}</p>
             <a href="tel:08002644022">{contact.phone}</a>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            <a href="mailto:luan.castro@eletricaarea.com.br">luan.castro@eletricaarea.com.br</a>
+            <a href="mailto:felipe.synthes@eletricaarea.com.br">felipe.synthes@eletricaarea.com.br</a>
           </div>
           <div>
             <h4>Unidades</h4>

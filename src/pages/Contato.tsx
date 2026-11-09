@@ -21,10 +21,12 @@ export default function Contato() {
           <div data-motion="right">
             <p>
               Envie lote, UF e a lista de materiais. Respondemos com
-              disponibilidade e prazo para a Fase 6.
+              disponibilidade e prazo oficial de entrega no canteiro.
             </p>
             <p>
-              {contact.email}
+              <a href="mailto:luan.castro@eletricaarea.com.br">luan.castro@eletricaarea.com.br</a>
+              <br />
+              <a href="mailto:felipe.synthes@eletricaarea.com.br">felipe.synthes@eletricaarea.com.br</a>
               <br />
               {contact.address}
             </p>
