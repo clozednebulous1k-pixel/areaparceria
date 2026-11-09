@@ -23,16 +23,22 @@ export default function Sobre() {
               material sem atraso.
             </p>
             <p>
-              Na Fase 6, o papel é claro: ser o fornecedor oficial da sua
-              operação — um ponto de pedido para eletroduto, cabo, conectividade e
-              energia.
+              Nosso papel é claro: ser o fornecedor oficial da sua operação — um
+              ponto único de pedido para eletroduto, cabo, conectividade e
+              energia com suporte técnico e pronta-entrega.
             </p>
             <Link to="/contato" className="btn btn-navy" style={{ marginTop: 20 }}>
               Solicitar cotação
             </Link>
           </div>
-          <div className="split-img" data-motion="right">
-            <img src="/img/warehouse.jpg" alt="Operação AREA" />
+          <div className="split-video-wrap" data-motion="right">
+            <iframe
+              className="youtube-embed"
+              src="https://www.youtube-nocookie.com/embed/XSNCU4qO_cE?autoplay=1&mute=1&loop=1&playlist=XSNCU4qO_cE&controls=1&rel=0"
+              title="Apresentação Institucional AREA"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
           </div>
         </div>
       </section>

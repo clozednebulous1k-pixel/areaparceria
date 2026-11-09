@@ -1,7 +1,7 @@
 export const contact = {
   phone: '0800 264 4022',
   whatsapp: '800 264 4022',
-  email: 'contato@eletricaarea.com.br',
+  email: 'licitacao@eletricaarea.com.br',
   ecommerce: 'ecommerce@eletricaarea.com.br',
   hours: 'Segunda a sexta, 8h30 às 18h',
   storeHours: 'Seg. a sex. 8h às 18h · Sáb. 8h às 14h',

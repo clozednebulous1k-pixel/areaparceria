@@ -51,7 +51,7 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-center" data-motion="up">
-            <span className="kicker">Conectividade de escolas · Fase 6</span>
+            <span className="kicker">Conectividade de escolas</span>
             <h1>FORNECEDOR OFICIAL</h1>
             <p>Materiais para o seu projeto — rede, energia e infraestrutura.</p>
             <div className="hero-actions">
