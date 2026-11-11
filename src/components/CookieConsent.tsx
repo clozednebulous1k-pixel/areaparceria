@@ -11,12 +11,16 @@ export default function CookieConsent() {
       const accepted = localStorage.getItem(LGPD_STORAGE_KEY)
       if (!accepted) {
         // Exibir após um breve delay para suavidade
-        const timer = setTimeout(() => setVisible(true), 800)
+        const timer = setTimeout(() => {
+          setVisible(true)
+          document.body.classList.add('has-lgpd-banner')
+        }, 800)
         return () => clearTimeout(timer)
       }
     } catch {
       // fallback caso localStorage esteja restrito
       setVisible(true)
+      document.body.classList.add('has-lgpd-banner')
     }
   }, [])
 
@@ -24,6 +28,7 @@ export default function CookieConsent() {
     try {
       localStorage.setItem(LGPD_STORAGE_KEY, new Date().toISOString())
     } catch {}
+    document.body.classList.remove('has-lgpd-banner')
     setVisible(false)
     setModalOpen(false)
   }

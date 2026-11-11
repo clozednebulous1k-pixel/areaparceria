@@ -2100,6 +2100,18 @@ select {
   right: 24px;
   z-index: 9999;
   font-family: var(--sans);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Quando o banner da LGPD estiver ativo, sobe suavemente o botão do WhatsApp */
+body.has-lgpd-banner .wa-balloon-container {
+  transform: translateY(-90px);
+}
+
+@media (max-width: 768px) {
+  body.has-lgpd-banner .wa-balloon-container {
+    transform: translateY(-135px);
+  }
 }
 
 /* Botão flutuante */
