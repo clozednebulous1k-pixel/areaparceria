@@ -10,7 +10,7 @@ export const contact = {
   hours: 'Segunda a sexta, 8h30 às 18h',
   storeHours: 'Seg. a sex. 8h às 18h · Sáb. 8h às 14h',
   address:
-    'Av. Professora Izoraida Marques Peres, 320 — Parque Campolim, Sorocaba/SP — CEP 18048-110',
+    'Av. Professora Izoraida Marques Peres, 320, Parque Campolim, Sorocaba/SP, CEP 18048-110',
   cnpj: '30.691.476/0003-49',
 }
 
@@ -19,7 +19,7 @@ export const stores = [
     city: 'São Paulo',
     label: 'Marginal Tietê',
     uf: 'SP',
-    address: 'Rua Ricardo Cavatton, 348 — Lapa de Baixo, São Paulo/SP — 05038-110',
+    address: 'Rua Ricardo Cavatton, 348, Lapa de Baixo, São Paulo/SP, 05038-110',
     phone: '(11) 3393-1842',
     lat: -23.5214,
     lng: -46.7042,
@@ -29,7 +29,7 @@ export const stores = [
     label: 'Parque Campolim',
     uf: 'SP',
     address:
-      'Av. Professora Izoraida Marques Peres, 320 — Parque Campolim, Sorocaba/SP — 18048-110',
+      'Av. Professora Izoraida Marques Peres, 320, Parque Campolim, Sorocaba/SP, 18048-110',
     phone: '(15) 3032-7900',
     lat: -23.5256,
     lng: -47.4631,
@@ -38,7 +38,7 @@ export const stores = [
     city: 'Mogi Guaçu',
     label: 'Guaçu Mall',
     uf: 'SP',
-    address: 'Av. Padre Jaime, 1930 — Vila Ricci, Mogi Guaçu/SP — 13844-070',
+    address: 'Av. Padre Jaime, 1930, Vila Ricci, Mogi Guaçu/SP, 13844-070',
     phone: '(19) 3105-0900',
     lat: -22.3678,
     lng: -46.9425,
@@ -47,7 +47,7 @@ export const stores = [
     city: 'Praia Grande',
     label: 'Vila Antártica',
     uf: 'SP',
-    address: 'Av. Min. Marcos Freire, 4032 — Vila Antártica, Praia Grande/SP — 11717-026',
+    address: 'Av. Min. Marcos Freire, 4032, Vila Antártica, Praia Grande/SP, 11717-026',
     phone: '(13) 4042-0998',
     lat: -24.0084,
     lng: -46.4128,
@@ -56,7 +56,7 @@ export const stores = [
     city: 'Manaus',
     label: 'Raiz',
     uf: 'AM',
-    address: 'Av. Tefé, 165 — Raiz, Manaus/AM — 69068-000',
+    address: 'Av. Tefé, 165, Raiz, Manaus/AM, 69068-000',
     phone: '(92) 3345-1619',
     lat: -3.1362,
     lng: -60.0214,
@@ -65,7 +65,7 @@ export const stores = [
     city: 'Joinville',
     label: 'Pirabeiraba',
     uf: 'SC',
-    address: 'Estrada do Oeste, 124 — Pirabeiraba, Joinville/SC — 89239-600',
+    address: 'Estrada do Oeste, 124, Pirabeiraba, Joinville/SC, 89239-600',
     phone: '(47) 3620-0620',
     lat: -26.2041,
     lng: -48.9172,
@@ -74,7 +74,7 @@ export const stores = [
     city: 'Recife',
     label: 'Boa Viagem',
     uf: 'PE',
-    address: 'Av. Engenheiro Domingos Ferreira, Recife/PE — 51020-030',
+    address: 'Av. Engenheiro Domingos Ferreira, Recife/PE, 51020-030',
     phone: '0800 264 4022',
     lat: -8.0476,
     lng: -34.8770,
@@ -142,7 +142,7 @@ export const news = [
     category: 'Segurança',
     title: 'Quadro de distribuição: o coração da instalação elétrica',
     excerpt:
-      'Dimensionamento, seletividade e organização de circuitos — um guia prático para projetos residenciais e industriais.',
+      'Dimensionamento, seletividade e organização de circuitos, um guia prático para projetos residenciais e industriais.',
     image: '/img/panel.jpg',
   },
   {
@@ -171,7 +171,7 @@ export const diffs = [
   {
     n: '01',
     title: 'Um único fornecedor',
-    text: 'Rede, energia, eletroduto e acabamento no mesmo pedido — para o canteiro não parar.',
+    text: 'Rede, energia, eletroduto e acabamento no mesmo pedido, para o canteiro não parar.',
   },
   {
     n: '02',

@@ -44,7 +44,7 @@ export default function LeadForm() {
       <div className="form-row">
         <label>
           Destino (Cidade / Obra / UF) *
-          <input name="destino" required placeholder="Ex.: Sorocaba — Obra Comercial" />
+          <input name="destino" required placeholder="Ex.: Sorocaba, Obra Comercial" />
         </label>
         <label>
           Material Solicitado *

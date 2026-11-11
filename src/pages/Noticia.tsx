@@ -44,7 +44,7 @@ export default function Noticia() {
             Se precisar de apoio para montar a lista de materiais da sua obra,
             fale com a unidade mais próxima ou envie o orçamento pelo site.
             Temos estoque, marcas reconhecidas e orientação técnica para cada
-            etapa — da infraestrutura à iluminação de acabamento.
+            etapa, da infraestrutura à iluminação de acabamento.
           </p>
           <Link to="/contato" className="btn btn-navy" style={{ marginTop: 32 }}>
             Falar com a AREA

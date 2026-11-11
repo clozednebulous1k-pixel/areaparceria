@@ -43,7 +43,7 @@ export default function Unidades() {
           <aside className="map-panel">
             <div className="map-caption">
               <strong>{store.city}</strong>
-              <span>{store.label} — {store.uf}</span>
+              <span>{store.label}, {store.uf}</span>
             </div>
             <iframe
               title={`Mapa da loja ${store.city}`}

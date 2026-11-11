@@ -51,9 +51,9 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-center" data-motion="up">
-            <span className="kicker">Conectividade de escolas</span>
+            <span className="kicker">CONECTIVIDADE DE ESCOLAS - APRENDER CONECTADO</span>
             <h1>FORNECEDOR OFICIAL</h1>
-            <p>Materiais para o seu projeto — rede, energia e infraestrutura.</p>
+            <p>Materiais para o seu projeto, rede, energia e infraestrutura.</p>
             <div className="hero-actions">
               <a href="#cotacao" className="btn btn-navy">
                 Solicitar cotação

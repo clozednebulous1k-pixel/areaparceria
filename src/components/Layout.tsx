@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '../auth'
 import { contact } from '../data'
+import CookieConsent from './CookieConsent'
 import SupportBalloon from './SupportBalloon'
 
 const links = [
@@ -92,6 +93,7 @@ export default function Layout() {
       </header>
       <Outlet />
       <SupportBalloon />
+      <CookieConsent />
       <footer className="footer">
         <span className="footer-mark" aria-hidden="true">
           AREA
@@ -101,7 +103,7 @@ export default function Layout() {
             <img src="/logo.png" alt="AREA" />
             <p>
               Fornecedor de materiais elétricos, rede e infraestrutura para obras
-              de conectividade — com atendimento nacional.
+              de conectividade, com atendimento nacional.
             </p>
             <p>{contact.address}</p>
           </div>

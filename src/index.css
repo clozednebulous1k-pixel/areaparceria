@@ -442,13 +442,6 @@ select {
   text-transform: uppercase;
 }
 
-.kicker::before {
-  content: '';
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-}
-
 .hero h1 {
   font-family: var(--serif);
   font-size: clamp(28px, 3.6vw, 42px);
@@ -1265,6 +1258,193 @@ select {
   }
   .custom-item-btn {
     width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Banner de Privacidade LGPD */
+.lgpd-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid #d4deea;
+  box-shadow: 0 -10px 30px rgba(10, 42, 92, 0.12);
+  padding: 18px 0;
+  animation: lgpdSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes lgpdSlideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.lgpd-banner-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.lgpd-banner-text {
+  flex: 1;
+}
+
+.lgpd-banner-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--navy);
+  font-size: 0.98rem;
+}
+
+.lgpd-banner-text p {
+  color: #4b6485;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.lgpd-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.lgpd-btn-primary {
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lgpd-btn-secondary {
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Modal de Termos LGPD */
+.lgpd-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(6, 26, 58, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.lgpd-modal-card {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px -12px rgba(10, 42, 92, 0.35);
+  overflow: hidden;
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lgpd-modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #e1e8f2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+}
+
+.lgpd-modal-header h3 {
+  font-size: 1.15rem;
+  color: var(--navy);
+  font-weight: 800;
+  margin: 0;
+}
+
+.lgpd-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.lgpd-modal-close:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.lgpd-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  color: #334155;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.lgpd-modal-body h4 {
+  color: var(--navy);
+  font-size: 0.98rem;
+  margin: 18px 0 6px;
+}
+
+.lgpd-modal-body h4:first-child {
+  margin-top: 0;
+}
+
+.lgpd-modal-body p {
+  margin: 0 0 12px;
+  color: #475569;
+}
+
+.lgpd-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e1e8f2;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+  .lgpd-banner {
+    padding: 16px 0;
+  }
+  .lgpd-banner-wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .lgpd-banner-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  .lgpd-btn-primary,
+  .lgpd-btn-secondary {
+    flex: 1;
+    text-align: center;
     justify-content: center;
   }
 }

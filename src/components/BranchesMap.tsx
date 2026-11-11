@@ -197,7 +197,7 @@ export default function BranchesMap() {
               </div>
               <h3 className="card-city">{activeBranch.city}</h3>
               <p className="card-label">
-                {activeBranch.label} — {activeBranch.uf}
+                {activeBranch.label}, {activeBranch.uf}
               </p>
 
               <div className="card-info-row">
