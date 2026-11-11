@@ -926,7 +926,7 @@ select {
   position: relative;
   border-radius: 18px;
   overflow: hidden;
-  min-height: 300px;
+  width: 100%;
   background: #061a3a;
   box-shadow: 0 16px 36px -10px rgba(10, 42, 92, 0.2);
   border: 1px solid #d4deea;
@@ -1788,10 +1788,21 @@ select {
     min-height: 0;
   }
   .hero-panel {
-    min-height: 180px;
+    min-height: 200px;
+    height: 220px;
+  }
+  .hero-panel:last-child {
+    display: none;
   }
   .hero-mid {
-    grid-template-rows: 200px auto;
+    grid-template-rows: auto auto;
+  }
+  .hero-mid-photo {
+    min-height: 200px;
+    height: 220px;
+  }
+  .hero-center {
+    padding: 24px 16px;
   }
   .form-row,
   .lead-split,
