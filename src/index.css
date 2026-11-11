@@ -986,6 +986,64 @@ select {
   padding: 20px;
 }
 
+/* Layout centralizado do Formulário de Cotação */
+.form-center-container {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-center-header {
+  text-align: center;
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+
+.form-center-header .section-index {
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.form-center-header h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 36px);
+  color: var(--navy);
+  font-weight: 800;
+  margin: 4px 0 12px;
+  line-height: 1.2;
+}
+
+.form-center-header p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+.form-center-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px -12px rgba(10, 42, 92, 0.1);
+  border: 1px solid #e1e8f2;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.form-center-card .form {
+  border: none;
+  padding: 24px 28px;
+  background: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .form-center-card .form {
+    padding: 16px;
+  }
+}
+
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

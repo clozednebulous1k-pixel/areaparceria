@@ -29,22 +29,17 @@ export default function Contato() {
         </div>
       </section>
       <section className="section tight">
-        <div className="wrap lead-split">
-          <div data-motion="left">
-            <LeadForm initialMaterial={initialMaterial} initialNote={initialNote} />
-          </div>
-          <div data-motion="right">
+        <div className="wrap form-center-container">
+          <div className="form-center-header" data-motion="up">
+            <div className="section-index">Atendimento Oficial</div>
+            <h2>Solicite disponibilidade e prazo no canteiro.</h2>
             <p>
               Envie lote, UF e a lista de materiais. Respondemos com
-              disponibilidade e prazo oficial de entrega no canteiro.
+              disponibilidade imediata e prazo oficial de entrega na escola ou canteiro.
             </p>
-            <p>
-              <a href="mailto:luan.castro@eletricaarea.com.br">luan.castro@eletricaarea.com.br</a>
-              <br />
-              <a href="mailto:felipe.synthes@eletricaarea.com.br">felipe.synthes@eletricaarea.com.br</a>
-              <br />
-              {contact.address}
-            </p>
+          </div>
+          <div className="form-center-card" data-motion="up">
+            <LeadForm initialMaterial={initialMaterial} initialNote={initialNote} />
           </div>
         </div>
       </section>

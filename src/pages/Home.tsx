@@ -210,8 +210,8 @@ export default function Home() {
       </section>
 
       <section className="section tight" id="cotacao">
-        <div className="wrap lead-split">
-          <div data-motion="left">
+        <div className="wrap form-center-container">
+          <div className="form-center-header" data-motion="up">
             <div className="section-index">Cotação</div>
             <h2>Seja atendido como obra do projeto.</h2>
             <p>
@@ -219,7 +219,7 @@ export default function Home() {
               de fornecimento para você operar como fornecedor oficial no campo.
             </p>
           </div>
-          <div data-motion="right">
+          <div className="form-center-card" data-motion="up">
             <LeadForm
               initialMaterial={
                 selectedItemForQuote
