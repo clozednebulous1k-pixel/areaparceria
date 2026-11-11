@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { stores } from '../data'
 import statesData from './brazilStates.json'
@@ -18,6 +18,15 @@ const branchCoordinates: Record<string, { x: number; y: number; labelPos: 'top' 
 export default function BranchesMap() {
   const [selectedCity, setSelectedCity] = useState<string>('São Paulo')
   const [hoveredCity, setHoveredCity] = useState<string | null>(null)
+  const detailCardRef = useRef<HTMLDivElement>(null)
+
+  const handleCitySelect = (cityName: string) => {
+    setSelectedCity(cityName)
+    // Se for mobile / tela menor, rolar suavemente até o card de informações
+    if (window.innerWidth <= 960 && detailCardRef.current) {
+      detailCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
+  }
 
   const activeBranch = stores.find((s) => s.city === (hoveredCity || selectedCity)) || stores[0]
 
@@ -136,7 +145,7 @@ export default function BranchesMap() {
                         key={`pin-${b.city}`}
                         className={`branch-point-group ${isActive ? 'is-active' : ''}`}
                         transform={`translate(${b.x}, ${b.y})`}
-                        onClick={() => setSelectedCity(b.city)}
+                        onClick={() => handleCitySelect(b.city)}
                         onMouseEnter={() => setHoveredCity(b.city)}
                         onMouseLeave={() => setHoveredCity(null)}
                       >
@@ -190,7 +199,7 @@ export default function BranchesMap() {
             </div>
 
             {/* Painel lateral interativo que mostra os dados da filial clicada/selecionada */}
-            <div className="branch-detail-card" data-motion="right">
+            <div ref={detailCardRef} className="branch-detail-card" data-motion="right">
               <div className="card-badge">
                 <span className="live-dot" />
                 Unidade Selecionada
@@ -228,7 +237,7 @@ export default function BranchesMap() {
                 key={b.city}
                 type="button"
                 className={`legend-pill ${selectedCity === b.city ? 'is-active' : ''}`}
-                onClick={() => setSelectedCity(b.city)}
+                onClick={() => handleCitySelect(b.city)}
                 onMouseEnter={() => setHoveredCity(b.city)}
                 onMouseLeave={() => setHoveredCity(null)}
               >

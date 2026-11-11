@@ -2248,7 +2248,8 @@ body.has-lgpd-banner .wa-balloon-container {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   pointer-events: none;
   opacity: 0;
-  animation: fadeInTooltip 0.5s ease 1.2s forwards;
+  /* Exibe a mensagem por alguns segundos (1.2s até 6.5s) e depois recolhe suavemente */
+  animation: fadeInOutTooltip 6.5s ease 1s forwards;
 }
 
 .wa-teaser-tooltip::after {
@@ -2262,8 +2263,24 @@ body.has-lgpd-banner .wa-balloon-container {
   border-color: transparent transparent transparent var(--navy-deep);
 }
 
-@keyframes fadeInTooltip {
-  to { opacity: 1; }
+@keyframes fadeInOutTooltip {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(10px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) translateX(10px);
+    visibility: hidden;
+  }
 }
 
 /* Card Modal do Balão */
@@ -3678,12 +3695,34 @@ body.has-lgpd-banner .wa-balloon-container {
   position: relative;
 }
 
+.branches-section .section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.branches-section .section-head h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3.2vw, 38px);
+  color: var(--navy);
+  font-weight: 800;
+  margin: 6px 0 10px;
+  line-height: 1.2;
+}
+
+.branches-section .section-head .btn {
+  margin-top: 16px;
+}
+
 .branches-subtitle {
   color: var(--muted);
   max-width: 620px;
-  margin-top: 8px;
+  margin: 0 auto;
   font-size: 0.98rem;
   line-height: 1.5;
+  text-align: center;
 }
 
 .branches-map-card {
