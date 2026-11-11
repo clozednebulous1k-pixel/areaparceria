@@ -83,7 +83,7 @@ export default function Home() {
         <div className="wrap stats-grid">
           {[
             ['30 mil+', 'escolas já conectadas no programa'],
-            ['Dez/26', 'início da demanda da Fase 6'],
+            ['Dez/26', 'início da demanda de entrega'],
             ['1.479', 'escolas só no Lote 9 · São Paulo'],
             ['6 lojas', 'e entrega nacional para o canteiro'],
           ].map(([n, t], i) => (
@@ -160,7 +160,7 @@ export default function Home() {
                   <span className="sku-code">{item.code}</span>
                   <strong className="sku-title">{item.name}</strong>
                   <div className="sku-action">
-                    <span className="sku-spec">Especificação Fase 6</span>
+                    <span className="sku-spec">Especificação Oficial</span>
                     <a href="#cotacao" className="sku-quote-link">Cotar item →</a>
                   </div>
                 </div>

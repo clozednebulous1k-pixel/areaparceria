@@ -35,9 +35,18 @@ export default function Solucoes() {
           <div className="sku-grid">
             {projectItems.map((item) => (
               <article key={item.code} className="sku" data-motion="zoom">
-                <img src={item.image} alt={item.name} />
-                <span>{item.code}</span>
-                <strong>{item.name}</strong>
+                <div className="sku-thumb">
+                  <img src={item.image} alt={item.name} />
+                  <span className="sku-badge">Pronta-entrega</span>
+                </div>
+                <div className="sku-content">
+                  <span className="sku-code">{item.code}</span>
+                  <strong className="sku-title">{item.name}</strong>
+                  <div className="sku-action">
+                    <span className="sku-spec">Especificação Oficial</span>
+                    <a href="/contato" className="sku-quote-link">Cotar item →</a>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
