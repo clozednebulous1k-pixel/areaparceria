@@ -17,7 +17,6 @@ const branchCoordinates: Record<string, { x: number; y: number; labelPos: 'top' 
 
 export default function BranchesMap() {
   const [selectedCity, setSelectedCity] = useState<string>('São Paulo')
-  const [hoveredCity, setHoveredCity] = useState<string | null>(null)
   const detailCardRef = useRef<HTMLDivElement>(null)
 
   const handleCitySelect = (cityName: string) => {
@@ -28,7 +27,7 @@ export default function BranchesMap() {
     }
   }
 
-  const activeBranch = stores.find((s) => s.city === (hoveredCity || selectedCity)) || stores[0]
+  const activeBranch = stores.find((s) => s.city === selectedCity) || stores[0]
 
   const branchPoints = stores.map((store) => {
     const coords = branchCoordinates[store.city] || { x: 280, y: 327, labelPos: 'right' }
@@ -113,9 +112,7 @@ export default function BranchesMap() {
                     const midY = (hub.y + target.y) / 2
                     const isTargetActive =
                       selectedCity === target.city ||
-                      hoveredCity === target.city ||
-                      selectedCity === hub.city ||
-                      hoveredCity === hub.city
+                      selectedCity === hub.city
 
                     return (
                       <g key={`conn-${target.city}`} className="connection-pair">
@@ -136,18 +133,14 @@ export default function BranchesMap() {
                 <g className="brazil-points-layer">
                   {branchPoints.map((b) => {
                     const isSelected = selectedCity === b.city
-                    const isHovered = hoveredCity === b.city
-                    const isActive = isSelected || isHovered
                     const isHub = b.city === 'São Paulo'
 
                     return (
                       <g
                         key={`pin-${b.city}`}
-                        className={`branch-point-group ${isActive ? 'is-active' : ''}`}
+                        className={`branch-point-group ${isSelected ? 'is-active' : ''}`}
                         transform={`translate(${b.x}, ${b.y})`}
                         onClick={() => handleCitySelect(b.city)}
-                        onMouseEnter={() => setHoveredCity(b.city)}
-                        onMouseLeave={() => setHoveredCity(null)}
                       >
                         {/* Efeito Radar em anel expandindo */}
                         <circle r="14" className="pulse-aura" />
@@ -156,7 +149,7 @@ export default function BranchesMap() {
                         {/* Marcador Base */}
                         <circle
                           r={isHub ? 6.5 : 5.5}
-                          className={`pin-base ${isHub ? 'pin-hub' : ''} ${isActive ? 'selected' : ''}`}
+                          className={`pin-base ${isHub ? 'pin-hub' : ''} ${isSelected ? 'selected' : ''}`}
                         />
                         {/* Ponto interior brilhante */}
                         <circle
@@ -238,8 +231,6 @@ export default function BranchesMap() {
                 type="button"
                 className={`legend-pill ${selectedCity === b.city ? 'is-active' : ''}`}
                 onClick={() => handleCitySelect(b.city)}
-                onMouseEnter={() => setHoveredCity(b.city)}
-                onMouseLeave={() => setHoveredCity(null)}
               >
                 <span className="legend-dot" />
                 <div className="legend-info">

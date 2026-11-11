@@ -4028,7 +4028,7 @@ body.has-lgpd-banner .wa-balloon-container {
   padding: 7px 14px;
   font-size: 12.5px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 2px 6px rgba(10, 42, 92, 0.04);
 }
 
@@ -4036,8 +4036,7 @@ body.has-lgpd-banner .wa-balloon-container {
 .legend-pill.is-active {
   background: #eff6ff;
   border-color: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px -3px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 10px -2px rgba(37, 99, 235, 0.18);
 }
 
 .legend-dot {
