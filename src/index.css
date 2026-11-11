@@ -1166,6 +1166,109 @@ select {
   box-shadow: 0 14px 28px -6px rgba(37, 99, 235, 0.35);
 }
 
+/* Card / Botão de Sugestão de Separação de Item */
+.custom-item-card {
+  margin-top: 36px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+  border: 1.5px dashed #93c5fd;
+  border-radius: 20px;
+  padding: 28px 36px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  box-shadow: 0 10px 30px -10px rgba(10, 42, 92, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-item-card:hover {
+  border-color: #2563eb;
+  border-style: solid;
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px -10px rgba(10, 42, 92, 0.14);
+}
+
+.custom-item-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #0a2a5c 0%, #1e40af 100%);
+  color: #60a5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 8px 20px -4px rgba(10, 42, 92, 0.3);
+}
+
+.custom-item-content {
+  flex: 1;
+}
+
+.custom-item-content h3 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.custom-item-content p {
+  color: #4b6485;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.custom-item-action {
+  flex-shrink: 0;
+}
+
+.custom-item-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 14px;
+  background: #0a2a5c;
+  color: #ffffff;
+  box-shadow: 0 10px 24px -6px rgba(10, 42, 92, 0.3);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.custom-item-btn:hover {
+  background: #1d4ed8;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -6px rgba(29, 78, 216, 0.4);
+}
+
+.custom-item-btn svg {
+  transition: transform 0.25s ease;
+}
+
+.custom-item-btn:hover svg {
+  transform: translateX(4px);
+}
+
+@media (max-width: 860px) {
+  .custom-item-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+    gap: 18px;
+  }
+  .custom-item-action {
+    width: 100%;
+  }
+  .custom-item-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .sku-grid {
     grid-template-columns: repeat(2, 1fr);
