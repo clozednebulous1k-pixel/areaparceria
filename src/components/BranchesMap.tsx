@@ -21,9 +21,15 @@ export default function BranchesMap() {
 
   const handleCitySelect = (cityName: string) => {
     setSelectedCity(cityName)
-    // Se for mobile / tela menor, rolar suavemente até o card de informações
-    if (window.innerWidth <= 960 && detailCardRef.current) {
-      detailCardRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    // Rolar suavemente até o card de informações com margem superior adequada
+    if (detailCardRef.current) {
+      const isMobile = window.innerWidth <= 960
+      if (isMobile) {
+        const yOffset = -90 // Sobe mais a tela para centralizar o card confortavelmente
+        const element = detailCardRef.current
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+        window.scrollTo({ top: y, behavior: 'smooth' })
+      }
     }
   }
 
