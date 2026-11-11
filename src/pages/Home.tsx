@@ -85,7 +85,7 @@ export default function Home() {
             ['30 mil+', 'escolas já conectadas no programa'],
             ['Dez/26', 'início da demanda de entrega'],
             ['1.479', 'escolas só no Lote 9 · São Paulo'],
-            ['6 lojas', 'e entrega nacional para o canteiro'],
+            ['7 unidades', 'e entrega nacional para o canteiro'],
           ].map(([n, t], i) => (
             <div key={n} className="stat" data-motion="up" style={{ '--d': `${i * 0.12}s` } as CSSProperties}>
               <strong>{n}</strong>

@@ -7,6 +7,7 @@ import statesData from './brazilStates.json'
 // SP Center ~ (280, 327), Manaus (AM) ~ (162, 128), Joinville (SC) ~ (274, 382)
 const branchCoordinates: Record<string, { x: number; y: number; labelPos: 'top' | 'bottom' | 'left' | 'right' }> = {
   'Manaus': { x: 162, y: 128, labelPos: 'top' },
+  'Recife': { x: 422, y: 168, labelPos: 'right' },
   'Mogi Guaçu': { x: 284, y: 312, labelPos: 'top' },
   'Sorocaba': { x: 268, y: 334, labelPos: 'left' },
   'São Paulo': { x: 295, y: 336, labelPos: 'right' },
@@ -82,7 +83,7 @@ export default function BranchesMap() {
                 <g className="brazil-states-layer">
                   {statesData.map((state) => {
                     // Estados que têm filial ganham um sutil destaque
-                    const hasBranch = ['saopaulo', 'amazonas', 'santacatarina'].includes(state.id)
+                    const hasBranch = ['saopaulo', 'amazonas', 'santacatarina', 'pernambuco'].includes(state.id)
                     return (
                       <path
                         key={state.id}

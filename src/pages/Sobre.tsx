@@ -26,8 +26,8 @@ export default function Sobre() {
               arremata lotes públicos e privados e não pode correr riscos com atrasos, falta de estoque ou material fora de norma.
             </p>
             <p>
-              Operamos com uma rede integrada de <strong>6 lojas físicas e Centros de Distribuição estratégicos</strong> (São Paulo, Sorocaba,
-              Mogi Guaçu, Praia Grande, Joinville e Manaus), garantindo escoamento ágil e logística dedicada do canteiro à escola em qualquer estado do Brasil.
+              Operamos com uma rede integrada de <strong>unidades físicas e Centros de Distribuição estratégicos</strong> (São Paulo, Sorocaba,
+              Mogi Guaçu, Praia Grande, Joinville, Manaus e Recife), garantindo escoamento ágil e logística dedicada do canteiro à escola em qualquer estado do Brasil.
             </p>
             <p>
               Já fornecemos centenas de quilômetros de cabeamento de rede estruturada homologado, infraestrutura em PVC e metálica pesada,

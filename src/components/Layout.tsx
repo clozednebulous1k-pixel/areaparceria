@@ -123,7 +123,7 @@ export default function Layout() {
           <div>
             <h4>Unidades</h4>
             <p>São Paulo · Sorocaba · Mogi Guaçu</p>
-            <p>Praia Grande · Manaus · Joinville</p>
+            <p>Praia Grande · Manaus · Joinville · Recife</p>
             <NavLink to="/unidades">Ver lojas</NavLink>
           </div>
         </div>

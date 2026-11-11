@@ -70,6 +70,15 @@ export const stores = [
     lat: -26.2041,
     lng: -48.9172,
   },
+  {
+    city: 'Recife',
+    label: 'Boa Viagem',
+    uf: 'PE',
+    address: 'Av. Engenheiro Domingos Ferreira, Recife/PE — 51020-030',
+    phone: '0800 264 4022',
+    lat: -8.0476,
+    lng: -34.8770,
+  },
 ]
 
 export const solutions = [
