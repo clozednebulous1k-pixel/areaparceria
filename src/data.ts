@@ -10,7 +10,7 @@ export const contact = {
   hours: 'Segunda a sexta, 8h30 às 18h',
   storeHours: 'Seg. a sex. 8h às 18h · Sáb. 8h às 14h',
   address:
-    'Av. Professora Izoraida Marques Peres, 320, Parque Campolim, Sorocaba/SP, CEP 18048-110',
+    'Rua Ricardo Cavatton, 348, Lapa de Baixo, São Paulo/SP, 05038-110',
   cnpj: '30.691.476/0003-49',
 }
 
