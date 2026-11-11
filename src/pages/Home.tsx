@@ -1,4 +1,4 @@
-import { useEffect, useRef, type CSSProperties } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import BranchesMap from '../components/BranchesMap'
 import FlowExplainer from '../components/FlowExplainer'
@@ -11,6 +11,7 @@ export default function Home() {
   const videoLeftRef = useRef<HTMLVideoElement>(null)
   const videoMidRef = useRef<HTMLVideoElement>(null)
   const videoRightRef = useRef<HTMLVideoElement>(null)
+  const [selectedItemForQuote, setSelectedItemForQuote] = useState<{ name: string; code: string } | null>(null)
 
   useEffect(() => {
     // 0.85 mantém a reprodução natural com fluidez de 60fps sem engasgos de frames
@@ -161,7 +162,13 @@ export default function Home() {
                   <strong className="sku-title">{item.name}</strong>
                   <div className="sku-action">
                     <span className="sku-spec">Especificação Oficial</span>
-                    <a href="#cotacao" className="sku-quote-link">Cotar item →</a>
+                    <a
+                      href="#cotacao"
+                      className="sku-quote-link"
+                      onClick={() => setSelectedItemForQuote({ name: item.name, code: item.code })}
+                    >
+                      Cotar item →
+                    </a>
                   </div>
                 </div>
               </article>
@@ -213,7 +220,18 @@ export default function Home() {
             </p>
           </div>
           <div data-motion="right">
-            <LeadForm />
+            <LeadForm
+              initialMaterial={
+                selectedItemForQuote
+                  ? `${selectedItemForQuote.name} (${selectedItemForQuote.code})`
+                  : ''
+              }
+              initialNote={
+                selectedItemForQuote
+                  ? `Olá, gostaria de solicitar disponibilidade e cotação para o item: ${selectedItemForQuote.name} [Código: ${selectedItemForQuote.code}].`
+                  : ''
+              }
+            />
           </div>
         </div>
       </section>

@@ -1,9 +1,24 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { contact } from '../data'
 import { saveLead } from '../services/supportService'
 
-export default function LeadForm() {
+interface LeadFormProps {
+  initialMaterial?: string
+  initialNote?: string
+}
+
+export default function LeadForm({ initialMaterial = '', initialNote = '' }: LeadFormProps) {
   const [sent, setSent] = useState(false)
+  const [material, setMaterial] = useState(initialMaterial)
+  const [observacoes, setObservacoes] = useState(initialNote)
+
+  useEffect(() => {
+    if (initialMaterial) setMaterial(initialMaterial)
+  }, [initialMaterial])
+
+  useEffect(() => {
+    if (initialNote) setObservacoes(initialNote)
+  }, [initialNote])
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -48,7 +63,13 @@ export default function LeadForm() {
         </label>
         <label>
           Material Solicitado *
-          <input name="material" required placeholder="Ex.: Cabos, Eletrodutos, Iluminação LED" />
+          <input
+            name="material"
+            required
+            placeholder="Ex.: Cabos, Eletrodutos, Iluminação LED"
+            value={material}
+            onChange={(e) => setMaterial(e.target.value)}
+          />
         </label>
       </div>
       <label>
@@ -60,6 +81,8 @@ export default function LeadForm() {
         <textarea
           name="mensagem"
           placeholder="Volume, prazo, marcas preferenciais ou detalhes específicos."
+          value={observacoes}
+          onChange={(e) => setObservacoes(e.target.value)}
         />
       </label>
       {sent ? (

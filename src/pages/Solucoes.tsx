@@ -39,7 +39,12 @@ export default function Solucoes() {
                   <strong className="sku-title">{item.name}</strong>
                   <div className="sku-action">
                     <span className="sku-spec">Especificação Oficial</span>
-                    <Link to="/contato" className="sku-quote-link">Cotar item →</Link>
+                    <Link
+                      to={`/contato?item=${encodeURIComponent(item.name)}&codigo=${encodeURIComponent(item.code)}`}
+                      className="sku-quote-link"
+                    >
+                      Cotar item →
+                    </Link>
                   </div>
                 </div>
               </article>

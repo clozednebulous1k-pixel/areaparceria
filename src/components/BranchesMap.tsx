@@ -162,10 +162,10 @@ export default function BranchesMap() {
                             b.pos === 'top'
                               ? 'translate(0, -12)'
                               : b.pos === 'bottom'
-                              ? 'translate(0, 18)'
-                              : b.pos === 'left'
-                              ? 'translate(-12, 3)'
-                              : 'translate(12, 3)'
+                                ? 'translate(0, 18)'
+                                : b.pos === 'left'
+                                  ? 'translate(-12, 3)'
+                                  : 'translate(12, 3)'
                           }
                         >
                           <text
