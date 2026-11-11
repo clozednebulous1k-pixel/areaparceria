@@ -82,6 +82,70 @@ export default function Sobre() {
           </div>
         </div>
       </section>
+
+      {/* Galeria do Impacto em Escolas e Projetos de Conectividade */}
+      <section className="section tight">
+        <div className="wrap">
+          <div className="section-head" data-motion="up">
+            <div>
+              <div className="section-index">Presença em Campo</div>
+              <h2>Conectando o futuro de milhares de alunos.</h2>
+              <p style={{ color: 'var(--muted)', marginTop: 8, maxWidth: 640 }}>
+                Veja alguns dos ambientes, laboratórios e escolas que já utilizam infraestrutura de rede, energia e materiais fornecidos pela AREA.
+              </p>
+            </div>
+            <Link to="/contato" className="btn btn-outline">
+              Falar com nossa equipe técnica ↗
+            </Link>
+          </div>
+
+          <div className="school-gallery-grid">
+            <figure className="school-gallery-card featured" data-motion="zoom">
+              <div className="gallery-img-wrap">
+                <img src="/img/escolas_conectadas.jpg" alt="Inclusão e Acessibilidade Digital" />
+                <span className="gallery-badge">Inclusão Digital</span>
+              </div>
+              <figcaption className="gallery-caption">
+                <strong>Programa Escolas Conectadas</strong>
+                <p>Acessibilidade, tablets e infraestrutura de alta velocidade para alunos com necessidades especiais.</p>
+              </figcaption>
+            </figure>
+
+            <figure className="school-gallery-card" data-motion="up" style={{ '--d': '0.1s' } as React.CSSProperties}>
+              <div className="gallery-img-wrap">
+                <img src="/img/escola_indigena.jpg" alt="Conectividade em Comunidades Indígenas" />
+                <span className="gallery-badge">Comunidades Indígenas</span>
+              </div>
+              <figcaption className="gallery-caption">
+                <strong>Conectividade sem Fronteiras</strong>
+                <p>Levando energia e internet para escolas em aldeias e áreas remotas de difícil acesso.</p>
+              </figcaption>
+            </figure>
+
+            <figure className="school-gallery-card" data-motion="up" style={{ '--d': '0.2s' } as React.CSSProperties}>
+              <div className="gallery-img-wrap">
+                <img src="/img/escola_lab_info.jpg" alt="Laboratório de Informática Escolar" />
+                <span className="gallery-badge">Laboratórios</span>
+              </div>
+              <figcaption className="gallery-caption">
+                <strong>Salas de Informática & Redes</strong>
+                <p>Cabeamento estruturado CAT6, racks, patch panels e alimentação elétrica estabilizada.</p>
+              </figcaption>
+            </figure>
+
+            <figure className="school-gallery-card" data-motion="up" style={{ '--d': '0.3s' } as React.CSSProperties}>
+              <div className="gallery-img-wrap">
+                <img src="/img/escola_sala_aula.jpg" alt="Salas de Aula Conectadas" />
+                <span className="gallery-badge">Ensino Moderno</span>
+              </div>
+              <figcaption className="gallery-caption">
+                <strong>Capacitação e Futuro</strong>
+                <p>Ambientes digitais completos para alunos desenvolverem habilidades tecnológicas.</p>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
     </main>
   )
 }

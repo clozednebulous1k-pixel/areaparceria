@@ -114,9 +114,11 @@ export default function Home() {
                       <span className="phase-node-core" />
                     </span>
                   </div>
-                  <div className="n">{d.n}</div>
-                  <h3>{d.title}</h3>
-                  <p>{d.text}</p>
+                  <div className="phase-card-box">
+                    <div className="n">{d.n}</div>
+                    <h3>{d.title}</h3>
+                    <p>{d.text}</p>
+                  </div>
                 </article>
               ))}
             </div>
