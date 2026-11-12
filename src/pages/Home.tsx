@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import BranchesMap from '../components/BranchesMap'
 import FlowExplainer from '../components/FlowExplainer'
 import LeadForm from '../components/LeadForm'
-import { diffs, projectItems } from '../data'
+import ProductModal from '../components/ProductModal'
+import { diffs, projectItems, type ProjectItem } from '../data'
 
 const motions = ['up', 'left', 'right', 'zoom'] as const
 
@@ -12,6 +13,7 @@ export default function Home() {
   const videoMidRef = useRef<HTMLVideoElement>(null)
   const videoRightRef = useRef<HTMLVideoElement>(null)
   const [selectedItemForQuote, setSelectedItemForQuote] = useState<{ name: string; code: string } | null>(null)
+  const [modalItem, setModalItem] = useState<ProjectItem | null>(null)
 
   useEffect(() => {
     // 0.85 mantém a reprodução natural com fluidez de 60fps sem engasgos de frames
@@ -104,16 +106,8 @@ export default function Home() {
             <div
               key={`${item.code}-${idx}`}
               className="product-ticker-card"
-              onClick={() => {
-                setSelectedItemForQuote({ name: item.name, code: item.code })
-                const el = document.getElementById('cotacao')
-                if (el) {
-                  const yOffset = -80
-                  const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
-                  window.scrollTo({ top: y, behavior: 'smooth' })
-                }
-              }}
-              title={`Clique para cotar ${item.name}`}
+              onClick={() => setModalItem(item)}
+              title={`Clique para ver detalhes de ${item.name}`}
             >
               <div className="ticker-img-wrap">
                 <img src={item.tickerImage || item.image} alt={item.name} loading="lazy" />
@@ -121,7 +115,7 @@ export default function Home() {
               <div className="ticker-card-info">
                 <span className="ticker-badge">Pronta-entrega</span>
                 <strong className="ticker-name">{item.name}</strong>
-                <span className="ticker-action">Cotar item →</span>
+                <span className="ticker-action">Ver detalhes / Cotar →</span>
               </div>
             </div>
           ))}
@@ -322,6 +316,21 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Modal exclusivo de detalhes e opções ao clicar em itens do carrossel */}
+      <ProductModal
+        item={modalItem}
+        onClose={() => setModalItem(null)}
+        onSelectForQuote={(item) => {
+          setSelectedItemForQuote({ name: item.name, code: item.code })
+          const el = document.getElementById('cotacao')
+          if (el) {
+            const yOffset = -80
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
+            window.scrollTo({ top: y, behavior: 'smooth' })
+          }
+        }}
+      />
     </main>
   )
 }
