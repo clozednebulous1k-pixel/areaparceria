@@ -524,9 +524,28 @@ select {
   position: relative;
   overflow: hidden;
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-  padding: 32px 0 24px;
+  padding: 16px 0 24px;
   border-bottom: 1px solid #e2e8f0;
   scroll-margin-top: 100px;
+}
+
+.ticker-center-plus {
+  text-align: center;
+  font-family: var(--sans, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--navy);
+  margin: 0 auto 10px;
+  user-select: none;
+  display: block;
+  letter-spacing: -0.02em;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.product-ticker-section:hover .ticker-center-plus {
+  color: #2563eb;
+  transform: scale(1.15);
 }
 
 .product-ticker-section::before,
@@ -1250,26 +1269,6 @@ select {
   align-items: center;
   justify-content: center;
   margin-bottom: 14px;
-  position: relative;
-}
-
-.phase-plus-mark {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 28px;
-  font-weight: 900;
-  line-height: 1;
-  color: var(--navy);
-  user-select: none;
-  transition: transform 0.3s ease, color 0.3s ease;
-  display: block;
-}
-
-.phase-step:hover .phase-plus-mark {
-  color: #2563eb;
-  transform: translateX(-50%) scale(1.25);
 }
 
 .phase-node-ring {

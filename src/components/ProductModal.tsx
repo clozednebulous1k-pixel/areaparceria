@@ -124,3 +124,4 @@ export default function ProductModal({ item, onClose, onSelectForQuote }: Produc
     </div>
   )
 }
+

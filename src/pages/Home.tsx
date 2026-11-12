@@ -100,6 +100,8 @@ export default function Home() {
 
       {/* Carrossel Infinito de Produtos Homologados */}
       <section id="carrossel-produtos" className="product-ticker-section" aria-label="Produtos homologados em destaque">
+        {/* Sinal '+' grande e centralizado acima dos itens do carrossel */}
+        <div className="ticker-center-plus" aria-hidden="true">+</div>
         <div className="product-ticker-track">
           {/* Duplicamos a lista para criar o loop visualmente contínuo e infinito */}
           {[...projectItems, ...projectItems].map((item, idx) => (
@@ -137,7 +139,6 @@ export default function Home() {
                   style={{ '--d': `${i * 0.12}s`, '--i': i } as CSSProperties}
                 >
                   <div className="phase-node">
-                    <span className="phase-plus-mark" aria-hidden="true">+</span>
                     <span className="phase-node-ring">
                       <span className="phase-node-core" />
                     </span>
