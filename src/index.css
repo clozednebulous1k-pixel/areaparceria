@@ -100,11 +100,30 @@ select {
   align-items: center;
   flex-shrink: 0;
   z-index: 1;
+  text-decoration: none;
+  gap: 2px;
 }
 
 .brand img {
   height: 46px;
   width: auto;
+}
+
+.brand-plus {
+  font-family: var(--sans, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+  color: #1e3a8a;
+  margin-left: 2px;
+  user-select: none;
+  transition: transform 0.25s ease, color 0.25s ease;
+  display: inline-block;
+}
+
+.brand:hover .brand-plus {
+  color: #2563eb;
+  transform: scale(1.15) rotate(5deg);
 }
 
 .nav-shell {
@@ -926,6 +945,26 @@ select {
   align-items: center;
   justify-content: center;
   margin-bottom: 14px;
+  position: relative;
+}
+
+.phase-plus-mark {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--navy);
+  user-select: none;
+  transition: transform 0.3s ease, color 0.3s ease;
+  display: block;
+}
+
+.phase-step:hover .phase-plus-mark {
+  color: #2563eb;
+  transform: translateX(-50%) scale(1.25);
 }
 
 .phase-node-ring {

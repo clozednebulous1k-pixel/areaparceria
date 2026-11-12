@@ -29,6 +29,7 @@ export default function Layout() {
           <div className="header-row intro-bar">
             <NavLink to="/" className="brand intro-logo" onClick={() => setOpen(false)}>
               <img src="/logo.png" alt="AREA Material Elétrico" />
+              <span className="brand-plus" aria-hidden="true">+</span>
             </NavLink>
             <div className="nav-shell intro-menu">
               <nav className="nav">

@@ -139,6 +139,7 @@ export default function Home() {
                   style={{ '--d': `${i * 0.12}s`, '--i': i } as CSSProperties}
                 >
                   <div className="phase-node">
+                    <span className="phase-plus-mark" aria-hidden="true">+</span>
                     <span className="phase-node-ring">
                       <span className="phase-node-core" />
                     </span>
