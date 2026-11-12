@@ -97,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* Carrossel Infinito de Produtos Homologados */}
-      <section className="product-ticker-section" aria-label="Produtos homologados em destaque">
+      <section id="carrossel-produtos" className="product-ticker-section" aria-label="Produtos homologados em destaque">
         <div className="product-ticker-track">
           {/* Duplicamos a lista para criar o loop visualmente contínuo e infinito */}
           {[...projectItems, ...projectItems].map((item, idx) => (
@@ -107,7 +107,11 @@ export default function Home() {
               onClick={() => {
                 setSelectedItemForQuote({ name: item.name, code: item.code })
                 const el = document.getElementById('cotacao')
-                if (el) el.scrollIntoView({ behavior: 'smooth' })
+                if (el) {
+                  const yOffset = -80
+                  const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
+                  window.scrollTo({ top: y, behavior: 'smooth' })
+                }
               }}
               title={`Clique para cotar ${item.name}`}
             >
@@ -194,7 +198,16 @@ export default function Home() {
                     <a
                       href="#cotacao"
                       className="sku-quote-link"
-                      onClick={() => setSelectedItemForQuote({ name: item.name, code: item.code })}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setSelectedItemForQuote({ name: item.name, code: item.code })
+                        const el = document.getElementById('cotacao')
+                        if (el) {
+                          const yOffset = -80
+                          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
+                          window.scrollTo({ top: y, behavior: 'smooth' })
+                        }
+                      }}
                     >
                       Cotar item →
                     </a>
@@ -249,6 +262,51 @@ export default function Home() {
             </p>
           </div>
           <div className="form-center-card" data-motion="up">
+            {selectedItemForQuote ? (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 16px',
+                  background: '#eff6ff',
+                  border: '1px solid #bfdbfe',
+                  borderRadius: '12px',
+                  marginBottom: '16px',
+                  fontSize: '13px',
+                  color: '#1e3a8a',
+                  fontWeight: 600,
+                }}
+              >
+                <span>
+                  Item selecionado: <strong>{selectedItemForQuote.name}</strong> ({selectedItemForQuote.code})
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById('carrossel-produtos')
+                    if (el) {
+                      const yOffset = -90
+                      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
+                      window.scrollTo({ top: y, behavior: 'smooth' })
+                    }
+                  }}
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #93c5fd',
+                    borderRadius: '8px',
+                    padding: '4px 10px',
+                    fontSize: '12px',
+                    color: '#2563eb',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                >
+                  ↑ Voltar ao carrossel
+                </button>
+              </div>
+            ) : null}
             <LeadForm
               initialMaterial={
                 selectedItemForQuote

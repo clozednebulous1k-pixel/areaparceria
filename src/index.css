@@ -526,6 +526,7 @@ select {
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
   padding: 32px 0 24px;
   border-bottom: 1px solid #e2e8f0;
+  scroll-margin-top: 100px;
 }
 
 .product-ticker-section::before,
