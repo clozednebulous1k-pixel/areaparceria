@@ -1016,6 +1016,79 @@ select {
     font-size: 1.2rem;
   }
 }
+
+/* =========================================================
+   MODAL EXCLUSIVO DO CATÁLOGO DE MATERIAIS (COM CARD OFICIAL)
+   ========================================================= */
+
+.catalog-product-modal-card {
+  max-width: 820px;
+}
+
+.catalog-modal-grid {
+  grid-template-columns: 360px 1fr;
+}
+
+.catalog-modal-media {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+  padding: 30px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #dbeafe;
+}
+
+.catalog-modal-card-preview {
+  width: 100%;
+  max-width: 290px;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px -8px rgba(10, 42, 92, 0.22);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  transition: transform 0.3s ease;
+  display: flex;
+}
+
+.catalog-modal-card-preview:hover {
+  transform: scale(1.02);
+}
+
+.catalog-modal-card-preview img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.catalog-modal-media-caption {
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+}
+
+@media (max-width: 680px) {
+  .catalog-modal-grid {
+    grid-template-columns: 1fr;
+  }
+  .catalog-modal-media {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 22px 18px 18px;
+  }
+  .catalog-modal-card-preview {
+    max-width: 220px;
+  }
+}
 .marquee-wrap {
   border-block: 1px solid var(--line);
   background: var(--ice);

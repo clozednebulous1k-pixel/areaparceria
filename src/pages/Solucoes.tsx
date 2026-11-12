@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import ProductModal from '../components/ProductModal'
+import CatalogProductModal from '../components/CatalogProductModal'
 import { projectItems, type ProjectItem } from '../data'
 
 export default function Solucoes() {
@@ -101,8 +101,8 @@ export default function Solucoes() {
         </div>
       </section>
 
-      {/* Modal de Detalhes do Produto */}
-      <ProductModal
+      {/* Modal Exclusivo de Detalhes do Catálogo com a Imagem/Card Oficial */}
+      <CatalogProductModal
         item={modalItem}
         onClose={() => setModalItem(null)}
         onSelectForQuote={(item) => {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import BranchesMap from '../components/BranchesMap'
+import CatalogProductModal from '../components/CatalogProductModal'
 import FlowExplainer from '../components/FlowExplainer'
 import LeadForm from '../components/LeadForm'
 import ProductModal from '../components/ProductModal'
@@ -14,6 +15,7 @@ export default function Home() {
   const videoRightRef = useRef<HTMLVideoElement>(null)
   const [selectedItemForQuote, setSelectedItemForQuote] = useState<{ name: string; code: string } | null>(null)
   const [modalItem, setModalItem] = useState<ProjectItem | null>(null)
+  const [catalogModalItem, setCatalogModalItem] = useState<ProjectItem | null>(null)
 
   useEffect(() => {
     // 0.85 mantém a reprodução natural com fluidez de 60fps sem engasgos de frames
@@ -183,12 +185,12 @@ export default function Home() {
               >
                 <div
                   className="sku-thumb"
-                  onClick={() => setModalItem(item)}
+                  onClick={() => setCatalogModalItem(item)}
                   title={`Clique para ver detalhes de ${item.name}`}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') setModalItem(item)
+                    if (e.key === 'Enter' || e.key === ' ') setCatalogModalItem(item)
                   }}
                 >
                   <img src={item.image} alt={item.name} />
@@ -198,7 +200,7 @@ export default function Home() {
                   <span className="sku-code">{item.code}</span>
                   <strong
                     className="sku-title"
-                    onClick={() => setModalItem(item)}
+                    onClick={() => setCatalogModalItem(item)}
                     style={{ cursor: 'pointer' }}
                     title={`Clique para ver detalhes de ${item.name}`}
                   >
@@ -338,6 +340,21 @@ export default function Home() {
       <ProductModal
         item={modalItem}
         onClose={() => setModalItem(null)}
+        onSelectForQuote={(item) => {
+          setSelectedItemForQuote({ name: item.name, code: item.code })
+          const el = document.getElementById('cotacao')
+          if (el) {
+            const yOffset = -80
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
+            window.scrollTo({ top: y, behavior: 'smooth' })
+          }
+        }}
+      />
+
+      {/* Modal exclusivo do catálogo com imagem e card oficial */}
+      <CatalogProductModal
+        item={catalogModalItem}
+        onClose={() => setCatalogModalItem(null)}
         onSelectForQuote={(item) => {
           setSelectedItemForQuote({ name: item.name, code: item.code })
           const el = document.getElementById('cotacao')
