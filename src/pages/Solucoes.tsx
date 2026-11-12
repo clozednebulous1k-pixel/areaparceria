@@ -1,7 +1,12 @@
-import { Link } from 'react-router-dom'
-import { projectItems } from '../data'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import ProductModal from '../components/ProductModal'
+import { projectItems, type ProjectItem } from '../data'
 
 export default function Solucoes() {
+  const [modalItem, setModalItem] = useState<ProjectItem | null>(null)
+  const navigate = useNavigate()
+
   return (
     <main>
       <section className="page-hero">
@@ -30,13 +35,29 @@ export default function Solucoes() {
           <div className="sku-grid">
             {projectItems.map((item) => (
               <article key={item.code} className="sku" data-motion="zoom">
-                <div className="sku-thumb">
+                <div
+                  className="sku-thumb"
+                  onClick={() => setModalItem(item)}
+                  title={`Clique para ver detalhes de ${item.name}`}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') setModalItem(item)
+                  }}
+                >
                   <img src={item.image} alt={item.name} />
                   <span className="sku-badge">Pronta-entrega</span>
                 </div>
                 <div className="sku-content">
                   <span className="sku-code">{item.code}</span>
-                  <strong className="sku-title">{item.name}</strong>
+                  <strong
+                    className="sku-title"
+                    onClick={() => setModalItem(item)}
+                    style={{ cursor: 'pointer' }}
+                    title={`Clique para ver detalhes de ${item.name}`}
+                  >
+                    {item.name}
+                  </strong>
                   <div className="sku-action">
                     <span className="sku-spec">Especificação Oficial</span>
                     <Link
@@ -79,6 +100,15 @@ export default function Solucoes() {
           </div>
         </div>
       </section>
+
+      {/* Modal de Detalhes do Produto */}
+      <ProductModal
+        item={modalItem}
+        onClose={() => setModalItem(null)}
+        onSelectForQuote={(item) => {
+          navigate(`/contato?item=${encodeURIComponent(item.name)}&codigo=${encodeURIComponent(item.code)}`)
+        }}
+      />
     </main>
   )
 }

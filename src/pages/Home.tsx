@@ -181,13 +181,29 @@ export default function Home() {
                 data-motion={i % 2 === 0 ? 'zoom' : 'up'}
                 style={{ '--d': `${(i % 3) * 0.08}s` } as CSSProperties}
               >
-                <div className="sku-thumb">
+                <div
+                  className="sku-thumb"
+                  onClick={() => setModalItem(item)}
+                  title={`Clique para ver detalhes de ${item.name}`}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') setModalItem(item)
+                  }}
+                >
                   <img src={item.image} alt={item.name} />
                   <span className="sku-badge">Pronta-entrega</span>
                 </div>
                 <div className="sku-content">
                   <span className="sku-code">{item.code}</span>
-                  <strong className="sku-title">{item.name}</strong>
+                  <strong
+                    className="sku-title"
+                    onClick={() => setModalItem(item)}
+                    style={{ cursor: 'pointer' }}
+                    title={`Clique para ver detalhes de ${item.name}`}
+                  >
+                    {item.name}
+                  </strong>
                   <div className="sku-action">
                     <span className="sku-spec">Especificação Oficial</span>
                     <a
