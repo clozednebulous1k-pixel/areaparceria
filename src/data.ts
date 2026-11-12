@@ -191,16 +191,16 @@ export const diffs = [
 ]
 
 export const projectItems = [
-  { code: 'ITM000970', name: 'CONECTOR MACHO RJ45', image: '/img/products/conector_rj45.jpg' },
-  { code: 'ITM001093', name: 'CABO DE REDE CAT6', image: '/img/products/cabo_cat6.jpg' },
-  { code: 'ITM0001712', name: 'CURVA PVC 1"', image: '/img/products/curva_pvc_1.jpg' },
-  { code: 'ITM000056', name: 'LUVA PVC 1"', image: '/img/products/luva_pvc_1.jpg' },
-  { code: 'ITM000081', name: 'ELETRODUTO PVC 1"', image: '/img/products/eletroduto_pvc_1.jpg' },
-  { code: 'ITM0001662', name: 'ABRAÇADEIRA D COM CUNHA', image: '/img/products/abracadeira_d.jpg' },
-  { code: 'ITM0002047', name: 'ELETRODUTO FLEXÍVEL', image: '/img/products/eletroduto_flexivel.jpg' },
-  { code: 'ITM001930', name: 'CONDULETE ALUM MULT', image: '/img/products/condulete_mult.jpg' },
-  { code: 'ITM002048', name: 'TOMADA 2P+T 10A', image: '/img/products/tomada_2pt_10a.jpg' },
-  { code: 'ITM001109', name: 'CABO 2,5MM²', image: '/img/products/cabo_25mm.jpg' },
-  { code: 'ITM000026', name: 'FITA ISOLANTE', image: '/img/products/fita_isolante.jpg' },
-  { code: 'ITM000960', name: 'CAPA PARA CONECTOR', image: '/img/products/capa_conector.jpg' },
+  { code: 'ITM000970', name: 'CONECTOR MACHO RJ45', image: '/img/products/conector_rj45.jpg', tickerImage: '/img/ticker/conector_rj45.jpg' },
+  { code: 'ITM001093', name: 'CABO DE REDE CAT6', image: '/img/products/cabo_cat6.jpg', tickerImage: '/img/ticker/cabo_cat6.jpg' },
+  { code: 'ITM0001712', name: 'CURVA PVC 1"', image: '/img/products/curva_pvc_1.jpg', tickerImage: '/img/ticker/curva_pvc_1.jpg' },
+  { code: 'ITM000056', name: 'LUVA PVC 1"', image: '/img/products/luva_pvc_1.jpg', tickerImage: '/img/ticker/luva_pvc_1.jpg' },
+  { code: 'ITM000081', name: 'ELETRODUTO PVC 1"', image: '/img/products/eletroduto_pvc_1.jpg', tickerImage: '/img/ticker/eletroduto_pvc_1.jpg' },
+  { code: 'ITM0001662', name: 'ABRAÇADEIRA D COM CUNHA', image: '/img/products/abracadeira_d.jpg', tickerImage: '/img/ticker/abracadeira_d.jpg' },
+  { code: 'ITM0002047', name: 'ELETRODUTO FLEXÍVEL', image: '/img/products/eletroduto_flexivel.jpg', tickerImage: '/img/ticker/eletroduto_flexivel.jpg' },
+  { code: 'ITM001930', name: 'CONDULETE ALUM MULT', image: '/img/products/condulete_mult.jpg', tickerImage: '/img/ticker/condulete_mult.jpg' },
+  { code: 'ITM002048', name: 'TOMADA 2P+T 10A', image: '/img/products/tomada_2pt_10a.jpg', tickerImage: '/img/ticker/tomada_2pt_10a.jpg' },
+  { code: 'ITM001109', name: 'CABO 2,5MM²', image: '/img/products/cabo_25mm.jpg', tickerImage: '/img/ticker/cabo_25mm.jpg' },
+  { code: 'ITM000026', name: 'FITA ISOLANTE', image: '/img/products/fita_isolante.jpg', tickerImage: '/img/ticker/fita_isolante.jpg' },
+  { code: 'ITM000960', name: 'CAPA PARA CONECTOR', image: '/img/products/capa_conector.jpg', tickerImage: '/img/ticker/capa_conector.jpg' },
 ]

@@ -112,7 +112,7 @@ export default function Home() {
               title={`Clique para cotar ${item.name}`}
             >
               <div className="ticker-img-wrap">
-                <img src={item.image} alt={item.name} loading="lazy" />
+                <img src={item.tickerImage || item.image} alt={item.name} loading="lazy" />
               </div>
               <div className="ticker-card-info">
                 <span className="ticker-badge">Pronta-entrega</span>
