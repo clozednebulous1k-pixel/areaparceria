@@ -500,7 +500,152 @@ select {
   margin: 0;
 }
 
-/* Marquee */
+/* Carrossel Infinito de Produtos Homologados (Logo abaixo da faixa azul) */
+.product-ticker-section {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  padding: 32px 0 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.product-ticker-section::before,
+.product-ticker-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.product-ticker-section::before {
+  left: 0;
+  background: linear-gradient(to right, #f8fafc, transparent);
+}
+
+.product-ticker-section::after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, transparent);
+}
+
+.product-ticker-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: tickerSlide 42s linear infinite;
+  will-change: transform;
+}
+
+.product-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+.product-ticker-card {
+  flex: 0 0 200px;
+  background: #ffffff;
+  border: 1px solid #e1e8f2;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(10, 42, 92, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.product-ticker-card:hover {
+  transform: translateY(-5px);
+  border-color: #93c5fd;
+  box-shadow: 0 12px 28px -6px rgba(37, 99, 235, 0.18);
+}
+
+.ticker-img-wrap {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ticker-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.product-ticker-card:hover .ticker-img-wrap img {
+  transform: scale(1.05);
+}
+
+.ticker-card-info {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid #f1f5f9;
+  background: #fafcff;
+}
+
+.ticker-badge {
+  font-size: 9.5px;
+  font-weight: 750;
+  color: #1d4ed8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ticker-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 31px;
+}
+
+.ticker-action {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-top: 2px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.product-ticker-card:hover .ticker-action {
+  color: #1d4ed8;
+  transform: translateX(3px);
+}
+
+@keyframes tickerSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Desloca exatamente metade da largura total da track (a primeira lista completa de itens) */
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-ticker-section {
+    padding: 24px 0 18px;
+  }
+  .product-ticker-card {
+    flex: 0 0 165px;
+  }
+  .ticker-name {
+    font-size: 11.5px;
+    height: 30px;
+  }
+}
 .marquee-wrap {
   border-block: 1px solid var(--line);
   background: var(--ice);

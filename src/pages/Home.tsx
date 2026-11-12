@@ -96,6 +96,34 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Carrossel Infinito de Produtos Homologados */}
+      <section className="product-ticker-section" aria-label="Produtos homologados em destaque">
+        <div className="product-ticker-track">
+          {/* Duplicamos a lista para criar o loop visualmente contínuo e infinito */}
+          {[...projectItems, ...projectItems].map((item, idx) => (
+            <div
+              key={`${item.code}-${idx}`}
+              className="product-ticker-card"
+              onClick={() => {
+                setSelectedItemForQuote({ name: item.name, code: item.code })
+                const el = document.getElementById('cotacao')
+                if (el) el.scrollIntoView({ behavior: 'smooth' })
+              }}
+              title={`Clique para cotar ${item.name}`}
+            >
+              <div className="ticker-img-wrap">
+                <img src={item.image} alt={item.name} loading="lazy" />
+              </div>
+              <div className="ticker-card-info">
+                <span className="ticker-badge">Pronta-entrega</span>
+                <strong className="ticker-name">{item.name}</strong>
+                <span className="ticker-action">Cotar item →</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section className="section tight">
         <div className="wrap">
           <div className="phase-stepper" aria-label="Fases do atendimento">
