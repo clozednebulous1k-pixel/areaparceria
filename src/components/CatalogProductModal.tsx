@@ -123,3 +123,4 @@ export default function CatalogProductModal({ item, onClose, onSelectForQuote }:
     </div>
   )
 }
+
