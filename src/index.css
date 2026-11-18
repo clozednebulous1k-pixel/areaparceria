@@ -1,13 +1,13 @@
 :root {
-  --navy: #0a2a5c;
-  --navy-deep: #061a3a;
-  --navy-mid: #16407a;
-  --navy-soft: #e7eef8;
-  --ice: #f4f7fc;
-  --white: #ffffff;
-  --line: #d4deea;
-  --text: #1c2c45;
-  --muted: #5b6b82;
+  --navy: #013b70;
+  --navy-deep: #01284d;
+  --navy-mid: #0e5999;
+  --navy-soft: #bee6f9;
+  --ice: #fdfdfe;
+  --white: #fdfdfe;
+  --line: #bee6f9;
+  --text: #060705;
+  --muted: #58595b;
   --serif: 'Montserrat', system-ui, sans-serif;
   --sans: 'Manrope', system-ui, sans-serif;
 }
@@ -2259,21 +2259,21 @@ select {
 .footer {
   position: relative;
   overflow: hidden;
-  background: var(--navy-deep);
+  background: #01284d;
   color: #c9d6e8;
-  padding: 56px 0 24px;
+  padding: 56px 0 28px;
 }
 
 .footer-mark {
   position: absolute;
   left: 50%;
-  top: 52%;
+  top: 50%;
   transform: translate(-50%, -50%);
   font-family: var(--serif);
-  font-weight: 800;
+  font-weight: 900;
   font-size: clamp(96px, 22vw, 280px);
-  letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.045);
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.035);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
@@ -2288,23 +2288,31 @@ select {
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1fr;
-  gap: 32px;
+  grid-template-columns: 1.4fr 0.9fr 1.3fr 1.1fr;
+  gap: 36px;
+  align-items: flex-start;
   padding-bottom: 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.footer img {
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-brand .footer-logo-img {
   height: 48px;
   width: auto;
-  filter: brightness(0) invert(1);
-  margin-bottom: 16px;
+  align-self: flex-start;
+  margin-bottom: 4px;
 }
 
 .footer h4 {
-  color: var(--white);
-  margin: 0 0 14px;
-  font-size: 14px;
+  color: #fdfdfe;
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -2313,13 +2321,23 @@ select {
 .footer p {
   display: block;
   margin: 0 0 8px;
-  color: #c9d6e8;
+  color: #bee6f9;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.footer-brand p {
+  color: #c9d6e8;
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 0;
 }
 
 .footer a:hover {
-  color: var(--white);
+  color: #fdfdfe;
+  text-decoration: underline;
 }
 
 .legal {
@@ -2327,7 +2345,7 @@ select {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  padding-top: 18px;
+  padding-top: 20px;
   font-size: 12px;
   color: #8ea0b8;
 }

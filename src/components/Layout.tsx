@@ -100,8 +100,8 @@ export default function Layout() {
           AREA
         </span>
         <div className="wrap footer-grid">
-          <div>
-            <img src="/logo.png" alt="AREA" />
+          <div className="footer-brand">
+            <img src="/logo_white.png" alt="AREA Material Elétrico" className="footer-logo-img" />
             <p>
               Fornecedor de materiais elétricos, rede e infraestrutura para obras
               de conectividade, com atendimento nacional.
