@@ -54,9 +54,9 @@ export default function BranchesMap() {
         <div className="section-head" data-motion="up">
           <div>
             <div className="section-index">Rede de Atendimento e Distribuição</div>
-            <h2>Presença conectada em todo o Brasil.</h2>
+            <h2>UM SÓ FORNECEDOR CONECTADO DE NORTE A SUL DO BRASIL.</h2>
             <p className="branches-subtitle">
-              Clique nos pontos das unidades no mapa para ver endereço, telefone e detalhes da filial.
+              Clique nos pontos de Unidades AREA no mapa para saber mais.
             </p>
           </div>
           <Link to="/unidades" className="btn btn-outline">

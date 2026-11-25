@@ -2264,23 +2264,6 @@ select {
   padding: 56px 0 28px;
 }
 
-.footer-mark {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--serif);
-  font-weight: 900;
-  font-size: clamp(96px, 22vw, 280px);
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.035);
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  line-height: 0.8;
-  z-index: 0;
-}
-
 .footer .wrap {
   position: relative;
   z-index: 1;
@@ -2302,10 +2285,11 @@ select {
 }
 
 .footer-brand .footer-logo-img {
-  height: 48px;
+  height: 44px;
   width: auto;
   align-self: flex-start;
-  margin-bottom: 4px;
+  margin-top: -3px;
+  margin-bottom: 6px;
 }
 
 .footer h4 {
@@ -2315,6 +2299,7 @@ select {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  line-height: 1.2;
 }
 
 .footer a,

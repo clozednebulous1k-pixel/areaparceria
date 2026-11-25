@@ -5,9 +5,7 @@ import CatalogProductModal from '../components/CatalogProductModal'
 import FlowExplainer from '../components/FlowExplainer'
 import LeadForm from '../components/LeadForm'
 import ProductModal from '../components/ProductModal'
-import { diffs, projectItems, type ProjectItem } from '../data'
-
-const motions = ['up', 'left', 'right', 'zoom'] as const
+import { projectItems, type ProjectItem } from '../data'
 
 export default function Home() {
   const videoLeftRef = useRef<HTMLVideoElement>(null)
@@ -56,9 +54,9 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-center" data-motion="up">
-            <span className="kicker">CONECTIVIDADE DE ESCOLAS - APRENDER CONECTADO</span>
+            <span className="kicker">FORNECEDOR PREPARADO</span>
             <h1>FORNECEDOR OFICIAL</h1>
-            <p>Materiais para o seu projeto, rede, energia e infraestrutura.</p>
+            <p>Para projetos de Conectividade de Escolas, rede, energia e infraestrutura.</p>
             <div className="hero-actions">
               <a href="#cotacao" className="btn btn-navy">
                 Solicitar cotação
@@ -87,10 +85,10 @@ export default function Home() {
       <section className="stats compact" id="projeto">
         <div className="wrap stats-grid">
           {[
-            ['30 mil+', 'escolas já conectadas no programa'],
-            ['Dez/26', 'início da demanda de entrega'],
-            ['1.479', 'escolas só no Lote 9 · São Paulo'],
-            ['7 unidades', 'e entrega nacional para o canteiro'],
+            ['20+ anos', 'de mercado'],
+            ['7 unidades', 'pelo brasil'],
+            ['2 Centros', 'de distribuição'],
+            ['20 mil+', 'produtos a pronta entrega'],
           ].map(([n, t], i) => (
             <div key={n} className="stat" data-motion="up" style={{ '--d': `${i * 0.12}s` } as CSSProperties}>
               <strong>{n}</strong>
@@ -123,37 +121,6 @@ export default function Home() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      <section className="section tight">
-        <div className="wrap">
-          <div className="phase-stepper" aria-label="Fases do atendimento">
-            <div className="phase-track-bar" aria-hidden="true">
-              <span className="phase-track-fill" />
-            </div>
-            <div className="phase-steps">
-              {diffs.map((d, i) => (
-                <article
-                  key={d.n}
-                  className="phase-step"
-                  data-motion={motions[i % motions.length]}
-                  style={{ '--d': `${i * 0.12}s`, '--i': i } as CSSProperties}
-                >
-                  <div className="phase-node">
-                    <span className="phase-node-ring">
-                      <span className="phase-node-core" />
-                    </span>
-                  </div>
-                  <div className="phase-card-box">
-                    <div className="n">{d.n}</div>
-                    <h3>{d.title}</h3>
-                    <p>{d.text}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
@@ -268,10 +235,9 @@ export default function Home() {
         <div className="wrap form-center-container">
           <div className="form-center-header" data-motion="up">
             <div className="section-index">Cotação</div>
-            <h2>Seja atendido como obra do projeto.</h2>
-            <p>
-              Envie lote, UF e a lista. Montamos disponibilidade, prazo e condição
-              de fornecimento para você operar como fornecedor oficial no campo.
+            <h2>Faça seu orçamento com a AREA aqui.</h2>
+            <p style={{ color: '#58595b' }}>
+              Envie sua lista para nós e receba um orçamento direto de um de nossos vendedores especializados.
             </p>
           </div>
           <div className="form-center-card" data-motion="up">
